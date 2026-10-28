@@ -13,7 +13,8 @@ import {
   FileText,
   ArrowRight,
   Terminal,
-  ExternalLink,
+  Zap,
+  Globe2,
 } from "lucide-react";
 
 export default function HomePage() {
@@ -94,19 +95,23 @@ export default function HomePage() {
       <Navbar />
 
       <main className="flex-1">
-        {/* Hero Section */}
+        {/* Hero Section with Animations */}
         <section className="relative overflow-hidden pt-16 pb-20 md:pt-24 md:pb-28 border-b border-border/60">
-          <div className="absolute inset-0 gradient-glow pointer-events-none -z-10" />
+          <div className="absolute inset-0 gradient-glow pointer-events-none -z-10 animate-pulse-glow" />
+
+          {/* Background Animated Floating Blobs */}
+          <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[350px] bg-brand-600/10 blur-[130px] rounded-full pointer-events-none -z-10" />
 
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-mono bg-brand-500/10 text-brand-400 border border-brand-500/20">
-              <span className="w-2 h-2 rounded-full bg-brand-400 animate-pulse"></span>
-              InterviewX v1.0 Production Platform
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-mono bg-brand-500/10 text-brand-400 border border-brand-500/20 shadow-sm transition-transform hover:scale-105">
+              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+              <span className="font-semibold">InterviewX v1.0 Production Platform</span>
+              <span className="text-muted-foreground hidden sm:inline">• Live Isolated Sandboxes</span>
             </div>
 
-            <h1 className="text-4xl sm:text-6xl font-extrabold tracking-tight text-foreground max-w-4xl mx-auto leading-tight sm:leading-none">
+            <h1 className="text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight text-foreground max-w-4xl mx-auto leading-tight sm:leading-none">
               Technical interviews, <br className="hidden sm:inline" />
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-brand-400 via-indigo-500 to-cyan-400">
+              <span className="shimmer-text">
                 built on evidence.
               </span>
             </h1>
@@ -118,33 +123,54 @@ export default function HomePage() {
             <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
               <Link
                 href="/interviews/new"
-                className="flex items-center gap-2 px-6 py-3 rounded-lg bg-brand-600 hover:bg-brand-500 text-white font-medium shadow-lg shadow-brand-500/25 transition-all text-sm group"
+                className="flex items-center gap-2 px-6 py-3.5 rounded-xl bg-brand-600 hover:bg-brand-500 active:scale-95 text-white font-medium shadow-lg shadow-brand-500/25 transition-all text-sm group"
               >
+                <Zap className="w-4 h-4 fill-white" />
                 Start an Interview
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </Link>
               <a
                 href="#product-demo"
-                className="flex items-center gap-2 px-6 py-3 rounded-lg border border-border bg-card hover:bg-accent text-foreground font-medium transition-colors text-sm"
+                className="flex items-center gap-2 px-6 py-3.5 rounded-xl border border-border bg-card/80 hover:bg-accent text-foreground font-medium transition-all text-sm hover:shadow-md"
               >
-                Explore the Platform
+                Explore Live Demo
               </a>
               <Link
                 href="/about-developer"
-                className="flex items-center gap-2 px-5 py-3 rounded-lg border border-border/80 bg-muted/40 hover:bg-muted text-muted-foreground hover:text-foreground font-medium transition-colors text-sm"
+                className="flex items-center gap-2 px-5 py-3.5 rounded-xl border border-border/80 bg-muted/40 hover:bg-muted text-muted-foreground hover:text-foreground font-medium transition-all text-sm"
               >
                 About Shivam Sony
               </Link>
             </div>
 
-            {/* Interactive Product Preview */}
-            <div id="product-demo" className="pt-10 scroll-mt-24">
-              <InteractivePreview />
+            {/* Quick Metrics Bar */}
+            <div className="pt-6 flex flex-wrap items-center justify-center gap-6 sm:gap-12 text-xs font-mono text-muted-foreground">
+              <div className="flex items-center gap-2">
+                <span className="text-foreground font-bold text-sm">2500ms</span>
+                <span>Hard Sandbox Timeout</span>
+              </div>
+              <div className="hidden sm:inline text-border">•</div>
+              <div className="flex items-center gap-2">
+                <span className="text-emerald-400 font-bold text-sm">100%</span>
+                <span>Deterministic Grading</span>
+              </div>
+              <div className="hidden sm:inline text-border">•</div>
+              <div className="flex items-center gap-2">
+                <span className="text-brand-400 font-bold text-sm">O(1)</span>
+                <span>Zero Stored Secret Leakage</span>
+              </div>
+            </div>
+
+            {/* Interactive Product Preview with Floating Badges */}
+            <div id="product-demo" className="pt-10 scroll-mt-24 relative">
+              <div className="animate-float">
+                <InteractivePreview />
+              </div>
             </div>
           </div>
         </section>
 
-        {/* Core Features Grid */}
+        {/* Core Features Grid with Animated Hover Effects */}
         <section className="py-20 md:py-28 border-b border-border/60 bg-muted/20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center max-w-2xl mx-auto mb-16 space-y-3">
@@ -165,12 +191,14 @@ export default function HomePage() {
                 return (
                   <div
                     key={i}
-                    className="p-5 rounded-xl bg-card border border-border/80 hover:border-brand-500/40 transition-all hover:shadow-lg hover:shadow-brand-500/5 group"
+                    className="p-5 rounded-xl bg-card border border-border/80 hover:border-brand-500/50 transition-all hover:shadow-xl hover:shadow-brand-500/10 hover:-translate-y-1 group"
                   >
-                    <div className="w-10 h-10 rounded-lg bg-brand-500/10 text-brand-400 flex items-center justify-center mb-4 group-hover:scale-105 transition-transform">
+                    <div className="w-10 h-10 rounded-lg bg-brand-500/10 text-brand-400 flex items-center justify-center mb-4 group-hover:scale-110 group-hover:bg-brand-600 group-hover:text-white transition-all shadow-sm">
                       <Icon className="w-5 h-5" />
                     </div>
-                    <h4 className="font-semibold text-foreground text-base mb-2">{f.title}</h4>
+                    <h4 className="font-semibold text-foreground text-base mb-2 group-hover:text-brand-400 transition-colors">
+                      {f.title}
+                    </h4>
                     <p className="text-xs text-muted-foreground leading-relaxed">{f.description}</p>
                   </div>
                 );
@@ -191,7 +219,10 @@ export default function HomePage() {
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {steps.map((s, idx) => (
-                <div key={idx} className="relative p-6 rounded-xl bg-card border border-border space-y-3">
+                <div
+                  key={idx}
+                  className="relative p-6 rounded-xl bg-card border border-border space-y-3 hover:border-brand-500/40 transition-all hover:-translate-y-0.5"
+                >
                   <div className="text-3xl font-extrabold font-mono text-brand-500/40">{s.step}</div>
                   <h4 className="text-lg font-bold text-foreground">{s.title}</h4>
                   <p className="text-sm text-muted-foreground leading-relaxed">{s.description}</p>
@@ -204,7 +235,7 @@ export default function HomePage() {
         {/* Security & Sandbox Section */}
         <section className="py-20 bg-muted/10 border-b border-border/60">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="rounded-2xl border border-border bg-card/80 p-8 sm:p-12">
+            <div className="rounded-2xl border border-border bg-card/80 p-8 sm:p-12 shadow-sm">
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
                 <div className="space-y-4">
                   <div className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-emerald-400 font-semibold">
@@ -238,7 +269,7 @@ export default function HomePage() {
                   </div>
                 </div>
 
-                <div className="p-6 rounded-xl bg-background border border-border/80 space-y-3 font-mono text-xs">
+                <div className="p-6 rounded-xl bg-background border border-border/80 space-y-3 font-mono text-xs shadow-inner">
                   <div className="text-muted-foreground text-[11px] pb-2 border-b border-border flex items-center justify-between">
                     <span>execution_guard.ts</span>
                     <span className="text-emerald-400 font-semibold">Verified Sandbox</span>
@@ -247,7 +278,7 @@ export default function HomePage() {
                   <p className="text-cyan-400">MAX_WALL_TIME_MS = 2500;</p>
                   <p className="text-cyan-400">MAX_MEMORY_KB = 128000; // 128 MB</p>
                   <p className="text-cyan-400">MAX_OUTPUT_BYTES = 32768; // 32 KB</p>
-                  <p className="text-slate-400">// Isolation Adapter: Judge0 CE / Worker Sandbox</p>
+                  <p className="text-slate-400">// Isolation Adapter: Judge0 CE / Safe Sandbox</p>
                   <div className="p-2.5 rounded bg-muted/60 border border-border/50 text-[11px]">
                     <span className="text-emerald-400">Status:</span> Connected and ready for multi-language execution.
                   </div>

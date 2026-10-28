@@ -4,9 +4,9 @@ const bcrypt = require("bcryptjs");
 const prisma = new PrismaClient();
 
 async function main() {
-  console.log("Seeding InterviewX database with authentic Indian professional personas & benchmark data...");
+  console.log("Seeding InterviewX database with Shivam Sony as Admin & Lead Interviewer, HackerRank/GFG style starter templates...");
 
-  // Clear existing records to ensure clean state
+  // Clear existing records
   await prisma.auditLog.deleteMany({});
   await prisma.feedbackItem.deleteMany({});
   await prisma.assessmentReport.deleteMany({});
@@ -23,21 +23,21 @@ async function main() {
 
   const passwordHash = await bcrypt.hash("Password123!", 10);
 
-  // 1. Seed Users with realistic Indian names and valid corporate/personal emails
+  // 1. Seed Shivam Sony as Admin & Lead Interviewer
   const adminUser = await prisma.user.create({
     data: {
-      name: "Ananya Sharma",
-      email: "ananya.sharma@interviewx.in",
+      name: "Shivam Sony",
+      email: "shivam.admin@interviewx.in",
       passwordHash,
       role: "ADMIN",
-      avatarUrl: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150&auto=format&fit=crop&q=80",
+      avatarUrl: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80",
     },
   });
 
   const interviewerUser = await prisma.user.create({
     data: {
-      name: "Aditya Verma",
-      email: "aditya.verma@interviewx.in",
+      name: "Shivam Sony",
+      email: "shivam.sony@interviewx.in",
       passwordHash,
       role: "INTERVIEWER",
       avatarUrl: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=150&auto=format&fit=crop&q=80",
@@ -96,9 +96,9 @@ async function main() {
     },
   });
 
-  console.log("Users and Profiles seeded successfully with realistic Indian personas.");
+  console.log("Users seeded with Shivam Sony as Admin and Lead Interviewer.");
 
-  // 2. Seed High-Yield Questions
+  // 2. Seed Questions with Incomplete Competitive Programming Style Headers (HackerRank / GFG)
   const q1 = await prisma.question.create({
     data: {
       title: "LRU Cache Implementation",
@@ -125,69 +125,97 @@ The functions \`get\` and \`put\` must each run in **$O(1)$ average time complex
 - $0 \\le \\text{value} \\le 10^5$
 - At most $2 \\times 10^5$ calls will be made to \`get\` and \`put\`.`,
       starterCodes: JSON.stringify({
-        python: `class LRUCache:
+        javascript: `// User function Template for JavaScript (Node.js)
+// Complete the 'LRUCache' class below.
+
+class LRUCache {
+  /**
+   * @param {number} capacity
+   */
+  constructor(capacity) {
+    this.capacity = capacity;
+    // Complete the constructor initialization below
+  }
+
+  /**
+   * @param {number} key
+   * @return {number}
+   */
+  get(key) {
+    // Complete the get method below: return value or -1
+    return -1;
+  }
+
+  /**
+   * @param {number} key
+   * @param {number} value
+   * @return {void}
+   */
+  put(key, value) {
+    // Complete the put method below: add/update key-value and evict LRU
+  }
+}
+`,
+        python: `# User function Template for Python 3
+# Complete the 'LRUCache' class below.
+
+class LRUCache:
     def __init__(self, capacity: int):
         self.capacity = capacity
-        # TODO: Initialize hash map and doubly linked list pointers
+        # Complete constructor initialization below
         pass
 
     def get(self, key: int) -> int:
-        # TODO: Return value or -1 if not found
+        # Complete get method below: return value or -1
         return -1
 
     def put(self, key: int, value: int) -> None:
-        # TODO: Insert or update, evict least recently used if exceeding capacity
+        # Complete put method below: add/update key-value and evict LRU
         pass
-
-# Test harness
-if __name__ == "__main__":
-    cache = LRUCache(2)
-    cache.put(1, 1)
-    cache.put(2, 2)
-    print(cache.get(1))
-    cache.put(3, 3)
-    print(cache.get(2))
-    cache.put(4, 4)
-    print(cache.get(1))
-    print(cache.get(3))
-    print(cache.get(4))
 `,
-        javascript: `class LRUCache {
-  constructor(capacity) {
+        typescript: `// User function Template for TypeScript
+class LRUCache {
+  private capacity: number;
+
+  constructor(capacity: number) {
     this.capacity = capacity;
-    this.cache = new Map();
+    // Complete constructor initialization below
   }
 
-  get(key) {
-    if (!this.cache.has(key)) return -1;
-    const val = this.cache.get(key);
-    this.cache.delete(key);
-    this.cache.set(key, val);
-    return val;
+  get(key: number): number {
+    // Complete get method below
+    return -1;
   }
 
-  put(key, value) {
-    if (this.cache.has(key)) {
-      this.cache.delete(key);
-    } else if (this.cache.size >= this.capacity) {
-      const oldestKey = this.cache.keys().next().value;
-      this.cache.delete(oldestKey);
-    }
-    this.cache.set(key, value);
+  put(key: number, value: number): void {
+    // Complete put method below
   }
 }
+`,
+        cpp: `// User function Template for C++
+#include <iostream>
+#include <unordered_map>
+using namespace std;
 
-// Test harness
-const cache = new LRUCache(2);
-cache.put(1, 1);
-cache.put(2, 2);
-console.log(cache.get(1));
-cache.put(3, 3);
-console.log(cache.get(2));
-cache.put(4, 4);
-console.log(cache.get(1));
-console.log(cache.get(3));
-console.log(cache.get(4));
+class LRUCache {
+private:
+    int capacity;
+
+public:
+    LRUCache(int capacity) {
+        this->capacity = capacity;
+        // Complete constructor initialization
+    }
+    
+    int get(int key) {
+        // Complete get method
+        return -1;
+    }
+    
+    void put(int key, int value) {
+        // Complete put method
+    }
+};
 `,
       }),
       createdBy: interviewerUser.id,
@@ -250,45 +278,22 @@ You can return the answer in any order, formatted as two space-separated integer
 
 **Example 2:**
 - Input: \`nums = [3,2,4], target = 6\`
-- Output: \`1 2\`
-
-### Constraints
-- $2 \\le \\text{nums.length} \\le 10^4$
-- $-10^9 \\le \\text{nums}[i] \\le 10^9$
-- $-10^9 \\le \\text{target} \\le 10^9$
-- Only one valid answer exists.`,
+- Output: \`1 2\``,
       starterCodes: JSON.stringify({
-        python: `def two_sum(nums, target):
-    seen = {}
-    for i, num in enumerate(nums):
-        complement = target - num
-        if complement in seen:
-            return f"{seen[complement]} {i}"
-        seen[num] = i
-    return ""
+        javascript: `// User function Template for JavaScript (Node.js)
 
-if __name__ == "__main__":
-    import sys
-    lines = sys.stdin.read().strip().split("\\n")
-    if lines and lines[0]:
-        nums = list(map(int, lines[0].split(",")))
-        target = int(lines[1])
-        print(two_sum(nums, target))
-    else:
-        print(two_sum([2, 7, 11, 15], 9))
-`,
-        javascript: `function twoSum(nums, target) {
-  const map = new Map();
-  for (let i = 0; i < nums.length; i++) {
-    const diff = target - nums[i];
-    if (map.has(diff)) {
-      return \`\${map.get(diff)} \${i}\`;
-    }
-    map.set(nums[i], i);
-  }
+/**
+ * Complete the 'twoSum' function below.
+ * @param {number[]} nums - Array of integers
+ * @param {number} target - Target integer sum
+ * @return {string} Space-separated indices of the two numbers (e.g. "0 1")
+ */
+function twoSum(nums, target) {
+  // Complete the function below
   return "";
 }
 
+// Driver Code
 const fs = require("fs");
 try {
   const input = fs.readFileSync(0, "utf-8").trim().split("\\n");
@@ -301,6 +306,36 @@ try {
   }
 } catch (e) {
   console.log(twoSum([2, 7, 11, 15], 9));
+}
+`,
+        python: `# User function Template for Python 3
+
+def two_sum(nums, target):
+    """
+    Complete the function below.
+    :param nums: List[int]
+    :param target: int
+    :return: str formatted as space-separated indices, e.g. "0 1"
+    """
+    # Write your solution here
+    pass
+
+# Driver Code
+if __name__ == "__main__":
+    import sys
+    lines = sys.stdin.read().strip().split("\\n")
+    if lines and lines[0]:
+        nums = list(map(int, lines[0].split(",")))
+        target = int(lines[1])
+        print(two_sum(nums, target))
+    else:
+        print(two_sum([2, 7, 11, 15], 9))
+`,
+        typescript: `// User function Template for TypeScript
+
+function twoSum(nums: number[], target: number): string {
+  // Complete the function below
+  return "";
 }
 `,
       }),
@@ -364,23 +399,31 @@ Given an array of \`intervals\` where \`intervals[i] = [start_i, end_i]\`, merge
 - Input: \`[[1,3],[2,6],[8,10],[15,18]]\`
 - Output: \`[[1,6],[8,10],[15,18]]\``,
       starterCodes: JSON.stringify({
-        javascript: `function mergeIntervals(intervals) {
-  if (!intervals.length) return [];
-  intervals.sort((a, b) => a[0] - b[0]);
-  const merged = [intervals[0]];
-  for (let i = 1; i < intervals.length; i++) {
-    const last = merged[merged.length - 1];
-    const curr = intervals[i];
-    if (curr[0] <= last[1]) {
-      last[1] = Math.max(last[1], curr[1]);
-    } else {
-      merged.push(curr);
-    }
-  }
-  return merged;
+        javascript: `// User function Template for JavaScript (Node.js)
+
+/**
+ * Complete the 'mergeIntervals' function below.
+ * @param {number[][]} intervals
+ * @return {number[][]}
+ */
+function mergeIntervals(intervals) {
+  // Complete the function below
+  return [];
 }
 
+// Driver Code
 console.log(JSON.stringify(mergeIntervals([[1,3],[2,6],[8,10],[15,18]])));
+`,
+        python: `# User function Template for Python 3
+
+def merge_intervals(intervals):
+    """
+    Complete the function below.
+    :param intervals: List[List[int]]
+    :return: List[List[int]]
+    """
+    # Complete implementation below
+    return []
 `,
       }),
       createdBy: interviewerUser.id,
@@ -416,10 +459,10 @@ console.log(JSON.stringify(mergeIntervals([[1,3],[2,6],[8,10],[15,18]])));
     ],
   });
 
-  // 3. Seed Realistic Indian Interviews with Random Access Codes
+  // 3. Seed Sample Interviews
   const interview1 = await prisma.interview.create({
     data: {
-      title: "Senior Backend Systems Screen — Rohan Mukherjee",
+      title: "Senior Backend Systems Assessment — Rohan Mukherjee",
       interviewerId: interviewerUser.id,
       candidateEmail: "rohan.mukherjee@gmail.com",
       candidateName: "Rohan Mukherjee",
@@ -428,7 +471,7 @@ console.log(JSON.stringify(mergeIntervals([[1,3],[2,6],[8,10],[15,18]])));
       interviewType: "LIVE_CODING",
       scheduledAt: new Date(),
       durationMinutes: 60,
-      startedAt: new Date(Date.now() - 15 * 60 * 1000), // 15 mins ago
+      startedAt: new Date(Date.now() - 15 * 60 * 1000),
       notes: "Candidate has 4+ years of backend experience in Bengaluru focusing on distributed key-value storage and caching.",
       allowedLanguages: JSON.stringify(["python", "javascript", "typescript", "cpp", "java"]),
     },
@@ -441,7 +484,6 @@ console.log(JSON.stringify(mergeIntervals([[1,3],[2,6],[8,10],[15,18]])));
     ],
   });
 
-  // Completed Interview with Assessment Report
   const interview2 = await prisma.interview.create({
     data: {
       title: "Full-Stack Data & Algorithms Interview — Sneha Patel",
@@ -540,54 +582,7 @@ console.log(twoSum([2, 7, 11, 15], 9));
     ],
   });
 
-  // Scheduled upcoming interview for a third candidate
-  const interview3 = await prisma.interview.create({
-    data: {
-      title: "Data Engineering & Analytics Screen — Arjun Kulkarni",
-      interviewerId: interviewerUser.id,
-      candidateEmail: "arjun.kulkarni@gmail.com",
-      candidateName: "Arjun Kulkarni",
-      inviteToken: "IVX-HYD-5103-AK",
-      status: "SCHEDULED",
-      interviewType: "LIVE_CODING",
-      scheduledAt: new Date(Date.now() + 2 * 3600 * 1000), // in 2 hours
-      durationMinutes: 45,
-      notes: "Candidate has strong SQL and Python data pipeline experience.",
-    },
-  });
-
-  await prisma.interviewQuestion.create({
-    data: {
-      interviewId: interview3.id,
-      questionId: q3.id,
-      orderIndex: 0,
-      pointsAvailable: 100,
-    },
-  });
-
-  // Audit Logs
-  await prisma.auditLog.createMany({
-    data: [
-      {
-        actorId: interviewerUser.id,
-        actorEmail: interviewerUser.email,
-        action: "INTERVIEW_CREATED",
-        resourceType: "INTERVIEW",
-        resourceId: interview1.id,
-        metadata: JSON.stringify({ title: interview1.title, candidate: interview1.candidateName }),
-      },
-      {
-        actorId: interviewerUser.id,
-        actorEmail: interviewerUser.email,
-        action: "REPORT_RELEASED",
-        resourceType: "ASSESSMENT_REPORT",
-        resourceId: report1.id,
-        metadata: JSON.stringify({ score: 100, candidate: interview2.candidateName }),
-      },
-    ],
-  });
-
-  console.log("Database successfully seeded with authentic Indian personas and random meeting tokens!");
+  console.log("Database seeded successfully with Shivam Sony and HackerRank/GFG templates!");
 }
 
 main()

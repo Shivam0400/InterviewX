@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import {
   CalendarDays,
   Clock,
@@ -15,6 +16,11 @@ import {
   RefreshCw,
   Sparkles,
   Key,
+  Copy,
+  CheckCircle2,
+  ExternalLink,
+  Shield,
+  Play,
 } from "lucide-react";
 
 interface QuestionItem {
@@ -93,7 +99,12 @@ function generateRandomAccessCode(): string {
 export function InterviewCreateForm({ availableQuestions }: InterviewCreateFormProps) {
   const router = useRouter();
 
-  const [title, setTitle] = React.useState("Senior Engineering Technical Screen");
+  // Interviewer config (Defaults to Shivam Sony)
+  const [interviewerName, setInterviewerName] = React.useState("Shivam Sony");
+  const [interviewerEmail, setInterviewerEmail] = React.useState("shivam.sony@interviewx.in");
+
+  // Candidate & Interview info
+  const [title, setTitle] = React.useState("Technical Assessment Screen — Rohan Mukherjee");
   const [candidateName, setCandidateName] = React.useState("Rohan Mukherjee");
   const [candidateEmail, setCandidateEmail] = React.useState("rohan.mukherjee@gmail.com");
   const [accessCode, setAccessCode] = React.useState<string>("");
@@ -110,6 +121,10 @@ export function InterviewCreateForm({ availableQuestions }: InterviewCreateFormP
   const [notes, setNotes] = React.useState("Candidate has 4+ years of backend engineering experience.");
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState<string | null>(null);
+
+  // Success state: Candidate Info Package Modal
+  const [createdInterview, setCreatedInterview] = React.useState<any | null>(null);
+  const [copiedNotice, setCopiedNotice] = React.useState(false);
 
   // Initialize fresh random code on client mount
   React.useEffect(() => {
@@ -172,6 +187,8 @@ export function InterviewCreateForm({ availableQuestions }: InterviewCreateFormP
           title,
           candidateName,
           candidateEmail,
+          interviewerName,
+          interviewerEmail,
           interviewType,
           durationMinutes,
           questionIds: selectedQuestions,
@@ -186,14 +203,149 @@ export function InterviewCreateForm({ availableQuestions }: InterviewCreateFormP
         throw new Error(data.error || "Failed to create interview");
       }
 
-      router.push(`/interviews/${data.interview.id}`);
-      router.refresh();
+      // Display the Candidate Info & Access Kit
+      setCreatedInterview(data.interview);
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : "Error creating interview");
     } finally {
       setLoading(false);
     }
   };
+
+  const copyCandidateNotice = () => {
+    if (!createdInterview) return;
+    const appUrl = window.location.origin;
+    const workspaceUrl = `${appUrl}/interviews/${createdInterview.id}/workspace?token=${createdInterview.inviteToken}`;
+    
+    const noticeText = `Subject: Invitation to Live Technical Interview with ${interviewerName} — InterviewX
+
+Hi ${candidateName},
+
+You have been scheduled for a Live Technical Assessment session on InterviewX.
+
+Details of your session:
+• Assessment Title: ${title}
+• Lead Interviewer: ${interviewerName} (${interviewerEmail})
+• Allocated Duration: ${durationMinutes} Minutes
+• Format: Live Collaborative Coding Workspace
+• Supported Languages: ${allowedLanguages.join(", ")}
+• Private Meeting Code: ${createdInterview.inviteToken}
+
+Join your live coding workspace directly:
+${workspaceUrl}
+
+Please ensure a stable internet connection. No special software is required — your code editor and tests will run directly in your browser.
+
+Best regards,
+${interviewerName}
+InterviewX Technical Assessments Team`;
+
+    navigator.clipboard.writeText(noticeText);
+    setCopiedNotice(true);
+    setTimeout(() => setCopiedNotice(false), 2500);
+  };
+
+  // If created, render the Candidate Info Package
+  if (createdInterview) {
+    const appUrl = typeof window !== "undefined" ? window.location.origin : "http://localhost:3000";
+    const workspaceUrl = `${appUrl}/interviews/${createdInterview.id}/workspace?token=${createdInterview.inviteToken}`;
+
+    return (
+      <div className="p-6 rounded-2xl bg-card border border-brand-500/40 shadow-xl shadow-brand-500/5 space-y-6 animate-in fade-in zoom-in-95 duration-200">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-border">
+          <div className="flex items-center gap-2.5">
+            <div className="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center font-bold">
+              ✓
+            </div>
+            <div>
+              <h2 className="text-lg font-bold text-foreground">Interview Scheduled Successfully!</h2>
+              <p className="text-xs text-muted-foreground">
+                Candidate access package generated with live workspace credentials.
+              </p>
+            </div>
+          </div>
+
+          <button
+            type="button"
+            onClick={copyCandidateNotice}
+            className="flex items-center gap-1.5 px-4 py-2 rounded-lg bg-brand-600 hover:bg-brand-500 text-white text-xs font-semibold shadow-sm transition-all"
+          >
+            {copiedNotice ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
+            {copiedNotice ? "Candidate Notice Copied!" : "Copy Candidate Notice Email"}
+          </button>
+        </div>
+
+        {/* Candidate Info Card */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+          <div className="p-4 rounded-xl bg-background border border-border/80 space-y-2">
+            <span className="text-[10px] font-mono uppercase text-muted-foreground font-semibold">Candidate Credentials</span>
+            <div className="font-semibold text-foreground text-sm">{candidateName}</div>
+            <div className="text-muted-foreground font-mono">{candidateEmail}</div>
+            <div className="pt-2 border-t border-border flex items-center justify-between">
+              <span className="text-muted-foreground">Meeting Code:</span>
+              <code className="text-brand-400 font-bold bg-brand-500/10 px-2 py-0.5 rounded font-mono">
+                {createdInterview.inviteToken}
+              </code>
+            </div>
+          </div>
+
+          <div className="p-4 rounded-xl bg-background border border-border/80 space-y-2">
+            <span className="text-[10px] font-mono uppercase text-muted-foreground font-semibold">Interviewer Authority</span>
+            <div className="font-semibold text-foreground text-sm">{interviewerName}</div>
+            <div className="text-muted-foreground font-mono">{interviewerEmail}</div>
+            <div className="pt-2 border-t border-border flex items-center justify-between">
+              <span className="text-muted-foreground">Session Duration:</span>
+              <span className="font-semibold text-foreground">{durationMinutes} Minutes</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Direct Workspace URL */}
+        <div className="p-4 rounded-xl bg-muted/40 border border-border space-y-2 text-xs">
+          <label className="block font-semibold text-foreground">Candidate Live Workspace URL</label>
+          <div className="flex items-center gap-2">
+            <input
+              type="text"
+              readOnly
+              value={workspaceUrl}
+              className="w-full px-3 py-2 text-xs rounded-lg border border-border bg-background text-foreground font-mono select-all focus:outline-none"
+            />
+            <button
+              type="button"
+              onClick={() => {
+                navigator.clipboard.writeText(workspaceUrl);
+                setCopiedNotice(true);
+                setTimeout(() => setCopiedNotice(false), 2000);
+              }}
+              className="px-3.5 py-2 rounded-lg bg-card hover:bg-muted border border-border text-foreground text-xs font-semibold shrink-0 transition-colors"
+            >
+              Copy Link
+            </button>
+          </div>
+        </div>
+
+        {/* Actions */}
+        <div className="flex flex-wrap items-center justify-between gap-3 pt-2">
+          <Link
+            href={`/interviews/${createdInterview.id}`}
+            className="px-4 py-2 rounded-lg border border-border bg-card hover:bg-muted text-xs font-medium text-foreground transition-colors"
+          >
+            Go to Session Dashboard
+          </Link>
+
+          <div className="flex items-center gap-2">
+            <Link
+              href={workspaceUrl}
+              className="flex items-center gap-1.5 px-5 py-2 rounded-lg bg-brand-600 hover:bg-brand-500 text-white text-xs font-semibold shadow-sm transition-all"
+            >
+              <Play className="w-3.5 h-3.5 fill-white" />
+              Launch Live Workspace Now
+            </Link>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
@@ -204,7 +356,7 @@ export function InterviewCreateForm({ availableQuestions }: InterviewCreateFormP
         </div>
       )}
 
-      {/* Quick Generator Pill */}
+      {/* Fast Candidate & Access Code Generator Pill */}
       <div className="p-4 rounded-xl bg-gradient-to-r from-brand-950/40 via-indigo-950/30 to-background border border-brand-500/30 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-sm">
         <div className="space-y-0.5">
           <div className="flex items-center gap-2 text-brand-400 font-semibold text-xs">
@@ -212,7 +364,7 @@ export function InterviewCreateForm({ availableQuestions }: InterviewCreateFormP
             <span>Fast Candidate & Access Code Generator</span>
           </div>
           <p className="text-[11px] text-muted-foreground">
-            Instantly generates an authentic Indian candidate profile, professional email, and fresh access token.
+            Instantly randomizes an authentic Indian candidate, email, and meeting access code.
           </p>
         </div>
 
@@ -224,6 +376,43 @@ export function InterviewCreateForm({ availableQuestions }: InterviewCreateFormP
           <Dices className="w-4 h-4" />
           Randomize Candidate & Code
         </button>
+      </div>
+
+      {/* Section 0: Interviewer Configuration (Default Shivam Sony with edit option) */}
+      <div className="p-5 rounded-xl bg-card border border-border/80 space-y-4">
+        <div className="flex items-center justify-between">
+          <h2 className="text-sm font-bold text-foreground flex items-center gap-2">
+            <Shield className="w-4 h-4 text-brand-500" />
+            Interviewer Identity (Default: Shivam Sony)
+          </h2>
+          <span className="text-[10px] font-mono text-muted-foreground">Editable</span>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label className="block text-xs font-medium text-foreground mb-1">Interviewer Name</label>
+            <input
+              type="text"
+              required
+              value={interviewerName}
+              onChange={(e) => setInterviewerName(e.target.value)}
+              className="w-full px-3 py-2 text-xs rounded-lg border border-border bg-background text-foreground focus:ring-2 focus:ring-brand-500 font-medium"
+              placeholder="e.g. Shivam Sony"
+            />
+          </div>
+
+          <div>
+            <label className="block text-xs font-medium text-foreground mb-1">Interviewer Email</label>
+            <input
+              type="email"
+              required
+              value={interviewerEmail}
+              onChange={(e) => setInterviewerEmail(e.target.value)}
+              className="w-full px-3 py-2 text-xs rounded-lg border border-border bg-background text-foreground font-mono focus:ring-2 focus:ring-brand-500"
+              placeholder="e.g. shivam.sony@interviewx.in"
+            />
+          </div>
+        </div>
       </div>
 
       {/* Section 1: General Info */}
@@ -242,7 +431,7 @@ export function InterviewCreateForm({ availableQuestions }: InterviewCreateFormP
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               className="w-full px-3 py-2 text-xs rounded-lg border border-border bg-background text-foreground focus:ring-2 focus:ring-brand-500 font-medium"
-              placeholder="e.g. Senior Backend Engineering Screen — Rohan Mukherjee"
+              placeholder="e.g. Technical Assessment Screen — Rohan Mukherjee"
             />
           </div>
 
@@ -279,7 +468,7 @@ export function InterviewCreateForm({ availableQuestions }: InterviewCreateFormP
       <div className="p-5 rounded-xl bg-card border border-border/80 space-y-4">
         <h2 className="text-sm font-bold text-foreground flex items-center gap-2">
           <User className="w-4 h-4 text-brand-500" />
-          Candidate Identity & Random Access Code
+          Candidate Identity & Random Meeting Token
         </h2>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -337,7 +526,7 @@ export function InterviewCreateForm({ availableQuestions }: InterviewCreateFormP
               </button>
             </div>
             <p className="text-[11px] text-muted-foreground mt-1 font-mono">
-              Candidate workspace URL: <code className="text-foreground">/interviews/workspace?token={accessCode || "..."}</code>
+              The candidate will receive this access token to authenticate into their workspace.
             </p>
           </div>
         </div>
@@ -461,7 +650,7 @@ export function InterviewCreateForm({ availableQuestions }: InterviewCreateFormP
             "Creating Assessment..."
           ) : (
             <>
-              Schedule Session with Access Code <ArrowRight className="w-3.5 h-3.5" />
+              Schedule Assessment & Generate Candidate Kit <ArrowRight className="w-3.5 h-3.5" />
             </>
           )}
         </button>

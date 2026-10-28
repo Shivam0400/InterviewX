@@ -71,7 +71,9 @@ export const AssessmentReportAiSchema = z.object({
 export type AssessmentReportAi = z.infer<typeof AssessmentReportAiSchema>;
 
 export class AiCopilotService {
-  private geminiKey = process.env.GEMINI_API_KEY?.trim() || "";
+  private get geminiKey(): string {
+    return process.env.GEMINI_API_KEY?.trim() || "";
+  }
 
   isConfigured(): boolean {
     return Boolean(this.geminiKey);

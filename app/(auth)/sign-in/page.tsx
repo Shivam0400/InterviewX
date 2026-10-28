@@ -8,7 +8,7 @@ import { ThemeToggle } from "@/components/theme/theme-toggle";
 
 export default function SignInPage() {
   const router = useRouter();
-  const [email, setEmail] = React.useState("aditya.verma@interviewx.in");
+  const [email, setEmail] = React.useState("shivam.sony@interviewx.in");
   const [password, setPassword] = React.useState("Password123!");
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState<string | null>(null);
@@ -107,7 +107,7 @@ export default function SignInPage() {
                 <span className="font-semibold text-foreground group-hover:text-brand-400 flex items-center justify-between">
                   Interviewer <UserCheck className="w-3.5 h-3.5 text-brand-500" />
                 </span>
-                <span className="text-[10px] text-muted-foreground font-mono">Aditya Verma (Lead Eng)</span>
+                <span className="text-[10px] text-muted-foreground font-mono">Shivam Sony (Lead Interviewer)</span>
               </button>
 
               <button
@@ -131,7 +131,7 @@ export default function SignInPage() {
                 <span className="font-semibold text-foreground group-hover:text-brand-400 flex items-center justify-between">
                   Admin <ShieldCheck className="w-3.5 h-3.5 text-purple-500" />
                 </span>
-                <span className="text-[10px] text-muted-foreground font-mono">Ananya Sharma (Director)</span>
+                <span className="text-[10px] text-muted-foreground font-mono">Shivam Sony (Platform Admin)</span>
               </button>
 
               <button

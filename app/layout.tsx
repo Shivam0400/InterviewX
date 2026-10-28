@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme/theme-provider";
+import { FloatingAiAssistant } from "@/components/ai/floating-ai-assistant";
 
 export const metadata: Metadata = {
   title: "InterviewX — Production-Grade Live Technical Interview Platform",
@@ -27,6 +28,7 @@ export default function RootLayout({
       <body className="min-h-screen bg-background font-sans antialiased flex flex-col">
         <ThemeProvider>
           {children}
+          <FloatingAiAssistant />
         </ThemeProvider>
       </body>
     </html>

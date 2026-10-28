@@ -30,8 +30,8 @@ export function AppHeader({ user }: AppHeaderProps) {
   const [roleSwitchOpen, setRoleSwitchOpen] = React.useState(false);
 
   const currentUser = user || {
-    name: "Aditya Verma",
-    email: "aditya.verma@interviewx.in",
+    name: "Shivam Sony",
+    email: "shivam.sony@interviewx.in",
     role: "INTERVIEWER",
   };
 
@@ -106,8 +106,8 @@ export function AppHeader({ user }: AppHeaderProps) {
                 className="w-full text-left p-2 rounded-lg hover:bg-muted transition-colors flex items-center justify-between"
               >
                 <div>
-                  <div className="font-semibold text-foreground">Aditya Verma</div>
-                  <div className="text-[10px] text-muted-foreground font-mono">aditya.verma@interviewx.in</div>
+                  <div className="font-semibold text-foreground">Shivam Sony</div>
+                  <div className="text-[10px] text-muted-foreground font-mono">shivam.sony@interviewx.in</div>
                 </div>
                 <span className="text-[10px] px-1.5 py-0.5 rounded bg-brand-500/10 text-brand-400">Interviewer</span>
               </button>
@@ -128,8 +128,8 @@ export function AppHeader({ user }: AppHeaderProps) {
                 className="w-full text-left p-2 rounded-lg hover:bg-muted transition-colors flex items-center justify-between"
               >
                 <div>
-                  <div className="font-semibold text-foreground">Ananya Sharma</div>
-                  <div className="text-[10px] text-muted-foreground font-mono">ananya.sharma@interviewx.in</div>
+                  <div className="font-semibold text-foreground">Shivam Sony</div>
+                  <div className="text-[10px] text-muted-foreground font-mono">shivam.admin@interviewx.in</div>
                 </div>
                 <span className="text-[10px] px-1.5 py-0.5 rounded bg-purple-500/10 text-purple-400">Admin</span>
               </button>

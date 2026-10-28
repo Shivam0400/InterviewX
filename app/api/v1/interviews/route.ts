@@ -8,6 +8,8 @@ const CreateInterviewSchema = z.object({
   title: z.string().min(3, "Title must be at least 3 characters"),
   candidateName: z.string().min(2, "Candidate name is required"),
   candidateEmail: z.string().email("Valid candidate email required"),
+  interviewerName: z.string().optional(),
+  interviewerEmail: z.string().optional(),
   interviewType: z.enum(["LIVE_CODING", "TIMED_ASSESSMENT", "DSA"]).default("LIVE_CODING"),
   durationMinutes: z.number().min(15).max(180).default(60),
   questionIds: z.array(z.string()).min(1, "Select at least one question"),
@@ -76,6 +78,8 @@ export async function POST(req: Request) {
       title,
       candidateName,
       candidateEmail,
+      interviewerName,
+      interviewerEmail,
       interviewType,
       durationMinutes,
       questionIds,
@@ -83,6 +87,24 @@ export async function POST(req: Request) {
       notes,
       inviteToken: clientToken,
     } = parsed.data;
+
+    // If custom interviewer specified, find or create interviewer user
+    if (interviewerEmail) {
+      let customInterviewer = await prisma.user.findUnique({
+        where: { email: interviewerEmail.toLowerCase().trim() },
+      });
+      if (!customInterviewer) {
+        customInterviewer = await prisma.user.create({
+          data: {
+            name: interviewerName || "Interviewer",
+            email: interviewerEmail.toLowerCase().trim(),
+            passwordHash: "Password123!",
+            role: "INTERVIEWER",
+          },
+        });
+      }
+      interviewerId = customInterviewer.id;
+    }
 
     // Generate random human-friendly high-entropy access code if not provided
     const cityHubs = ["BLR", "DEL", "HYD", "PUN", "MUM", "GGN"];
