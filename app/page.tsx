@@ -370,7 +370,7 @@ export default function HomePage() {
                     </span>
                   </div>
                   <p className="text-xs text-muted-foreground">
-                    B.Tech CS & Data Science • GEC Jamui • legendshivam11@gmail.com
+                    B.Tech CS & Data Science • GEC Jamui • shivamjais.op09@gmail.com
                   </p>
                 </div>
               </div>

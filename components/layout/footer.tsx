@@ -102,11 +102,11 @@ export function Footer() {
               </li>
               <li>
                 <a
-                  href="mailto:legendshivam11@gmail.com"
+                  href="mailto:shivamjais.op09@gmail.com"
                   className="hover:text-foreground transition-colors flex items-center gap-1 font-mono text-xs"
                 >
                   <Mail className="w-3.5 h-3.5 text-brand-400" />
-                  legendshivam11@gmail.com
+                  shivamjais.op09@gmail.com
                 </a>
               </li>
               <li>
@@ -122,13 +122,13 @@ export function Footer() {
               </li>
               <li>
                 <a
-                  href="https://github.com/shivam-iyk"
+                  href="https://github.com/Shivam0400"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="hover:text-foreground transition-colors flex items-center gap-1"
                 >
                   <Github className="w-3.5 h-3.5" />
-                  github.com/shivam-iyk
+                  github.com/Shivam0400
                 </a>
               </li>
             </ul>

@@ -8,6 +8,18 @@ import { Code2, Plus, Trash2, ArrowRight, ChevronLeft, AlertCircle, Check } from
 export default function NewQuestionPage() {
   const router = useRouter();
 
+  // Enforce RBAC: Candidates cannot add questions
+  React.useEffect(() => {
+    fetch("/api/v1/me")
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.user?.role === "CANDIDATE") {
+          router.push("/dashboard");
+        }
+      })
+      .catch(() => {});
+  }, [router]);
+
   const [title, setTitle] = React.useState("");
   const [slug, setSlug] = React.useState("");
   const [difficulty, setDifficulty] = React.useState<"EASY" | "MEDIUM" | "HARD">("MEDIUM");

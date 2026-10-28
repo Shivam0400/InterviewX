@@ -1,9 +1,17 @@
+import { redirect } from "next/navigation";
 import prisma from "@/lib/db/prisma";
+import { getCurrentSession } from "@/lib/auth/jwt";
 import { InterviewCreateForm } from "@/components/interview/interview-create-form";
 
 export const dynamic = "force-dynamic";
 
 export default async function NewInterviewPage() {
+  const session = await getCurrentSession();
+
+  // Enforce RBAC: Candidates cannot schedule interviews
+  if (session?.role === "CANDIDATE") {
+    redirect("/dashboard");
+  }
   const questions = await prisma.question.findMany({
     where: { visibility: "PUBLIC" },
     orderBy: { difficulty: "asc" },

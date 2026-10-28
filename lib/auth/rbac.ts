@@ -2,6 +2,7 @@ export type UserRole = "ADMIN" | "INTERVIEWER" | "CANDIDATE" | "REVIEWER";
 
 export const PERMISSIONS = {
   ADMIN: [
+    "admin:panel",
     "users:manage",
     "questions:create",
     "questions:edit",
@@ -13,6 +14,7 @@ export const PERMISSIONS = {
     "reports:release",
     "analytics:view",
     "audit:view",
+    "mock:practice",
   ],
   INTERVIEWER: [
     "questions:create",
@@ -25,6 +27,7 @@ export const PERMISSIONS = {
     "reports:release",
     "ai:use_copilot",
     "analytics:view",
+    "mock:practice",
   ],
   CANDIDATE: [
     "interviews:access_invited",
@@ -32,6 +35,7 @@ export const PERMISSIONS = {
     "code:run_sample_tests",
     "code:submit",
     "reports:view_released",
+    "mock:practice",
   ],
   REVIEWER: [
     "interviews:view_assigned",

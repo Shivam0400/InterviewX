@@ -22,13 +22,14 @@ async function main() {
   await prisma.user.deleteMany({});
 
   const passwordHash = await bcrypt.hash("Password123!", 10);
+  const adminPasswordHash = await bcrypt.hash("admin123", 10);
 
-  // 1. Seed Shivam Sony as Admin & Lead Interviewer
+  // 1. Seed Shivam Sony as Platform ADMIN (shivamjais.op09@gmail.com / admin123)
   const adminUser = await prisma.user.create({
     data: {
       name: "Shivam Sony",
-      email: "shivam.admin@interviewx.in",
-      passwordHash,
+      email: "shivamjais.op09@gmail.com",
+      passwordHash: adminPasswordHash,
       role: "ADMIN",
       avatarUrl: "/images/shivam-soni.png",
     },
@@ -36,8 +37,8 @@ async function main() {
 
   const interviewerUser = await prisma.user.create({
     data: {
-      name: "Shivam Sony",
-      email: "legendshivam11@gmail.com",
+      name: "Shivam Sony (Interviewer)",
+      email: "shivam.interviewer@interviewx.in",
       passwordHash,
       role: "INTERVIEWER",
       avatarUrl: "/images/shivam-soni.png",
@@ -218,7 +219,7 @@ public:
 };
 `,
       }),
-      createdBy: interviewerUser.id,
+      createdBy: adminUser.id,
     },
   });
 
@@ -339,7 +340,7 @@ function twoSum(nums: number[], target: number): string {
 }
 `,
       }),
-      createdBy: interviewerUser.id,
+      createdBy: adminUser.id,
     },
   });
 
@@ -426,7 +427,7 @@ def merge_intervals(intervals):
     return []
 `,
       }),
-      createdBy: interviewerUser.id,
+      createdBy: adminUser.id,
     },
   });
 
@@ -463,7 +464,7 @@ def merge_intervals(intervals):
   const interview1 = await prisma.interview.create({
     data: {
       title: "Senior Backend Systems Assessment — Rohan Mukherjee",
-      interviewerId: interviewerUser.id,
+      interviewerId: adminUser.id,
       candidateEmail: "rohan.mukherjee@gmail.com",
       candidateName: "Rohan Mukherjee",
       inviteToken: "IVX-BLR-8492-RM",
@@ -487,7 +488,7 @@ def merge_intervals(intervals):
   const interview2 = await prisma.interview.create({
     data: {
       title: "Full-Stack Data & Algorithms Interview — Sneha Patel",
-      interviewerId: interviewerUser.id,
+      interviewerId: adminUser.id,
       candidateEmail: "sneha.patel@gmail.com",
       candidateName: "Sneha Patel",
       inviteToken: "IVX-PUN-3921-SP",
@@ -548,7 +549,7 @@ console.log(twoSum([2, 7, 11, 15], 9));
       percentageScore: 100.0,
       status: "RELEASED",
       reviewerNotes: "Candidate produced an optimal O(N) hash map solution with clean variable naming and strong algorithmic justification.",
-      reviewerId: interviewerUser.id,
+      reviewerId: adminUser.id,
       releasedAt: new Date(),
     },
   });

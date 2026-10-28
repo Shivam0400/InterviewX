@@ -9,8 +9,8 @@ import { InterviewXBrand } from "@/components/brand/logo";
 
 export default function SignInPage() {
   const router = useRouter();
-  const [email, setEmail] = React.useState("legendshivam11@gmail.com");
-  const [password, setPassword] = React.useState("Password123!");
+  const [email, setEmail] = React.useState("shivamjais.op09@gmail.com");
+  const [password, setPassword] = React.useState("admin123");
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState<string | null>(null);
 
@@ -134,13 +134,14 @@ export default function SignInPage() {
                 type="button"
                 onClick={() => handleQuickDemo("ADMIN")}
                 disabled={loading}
-                className="p-2.5 rounded-lg border border-border bg-background hover:bg-muted text-left transition-colors flex flex-col gap-0.5 group"
+                className="p-2.5 rounded-lg border border-purple-500/30 bg-purple-950/20 hover:bg-purple-900/30 text-left transition-colors flex flex-col gap-0.5 group"
               >
-                <span className="font-semibold text-foreground group-hover:text-brand-400 flex items-center justify-between">
-                  Admin <ShieldCheck className="w-3.5 h-3.5 text-purple-500" />
+                <span className="font-semibold text-foreground group-hover:text-purple-400 flex items-center justify-between">
+                  Admin <ShieldCheck className="w-3.5 h-3.5 text-purple-400" />
                 </span>
-                <span className="text-[10px] text-muted-foreground font-mono">Shivam Sony</span>
-                <span className="text-[9px] text-purple-400/80 font-mono">shivam.admin@interviewx.in</span>
+                <span className="text-[10px] text-foreground font-mono">Shivam Sony</span>
+                <span className="text-[9px] text-purple-300 font-mono truncate">shivamjais.op09@gmail.com</span>
+                <span className="text-[9px] text-muted-foreground font-mono">Pass: admin123</span>
               </button>
 
               <button
@@ -177,7 +178,7 @@ export default function SignInPage() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   className="w-full pl-9 pr-3 py-2 text-xs rounded-lg border border-border bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-brand-500 font-mono"
-                  placeholder="legendshivam11@gmail.com"
+                  placeholder="shivamjais.op09@gmail.com"
                 />
               </div>
             </div>

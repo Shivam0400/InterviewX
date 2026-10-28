@@ -15,11 +15,20 @@ describe("Role-Based Access Control (RBAC)", () => {
     expect(hasPermission("INTERVIEWER", "users:manage")).toBe(false);
   });
 
-  it("restricts CANDIDATE to invited workspace and submission permissions", () => {
+  it("restricts CANDIDATE to invited workspace, mock practice, and prevents scheduling", () => {
     expect(hasPermission("CANDIDATE", "workspace:code")).toBe(true);
     expect(hasPermission("CANDIDATE", "code:submit")).toBe(true);
+    expect(hasPermission("CANDIDATE", "mock:practice")).toBe(true);
     expect(hasPermission("CANDIDATE", "interviews:create")).toBe(false);
     expect(hasPermission("CANDIDATE", "reports:release")).toBe(false);
+    expect(hasPermission("CANDIDATE", "admin:panel")).toBe(false);
+  });
+
+  it("authorizes ADMIN for global governance and control panel", () => {
+    expect(hasPermission("ADMIN", "admin:panel")).toBe(true);
+    expect(hasPermission("ADMIN", "users:manage")).toBe(true);
+    expect(hasPermission("ADMIN", "interviews:delete")).toBe(true);
+    expect(hasPermission("INTERVIEWER", "admin:panel")).toBe(false);
   });
 
   it("validates interview management ownership correctly", () => {

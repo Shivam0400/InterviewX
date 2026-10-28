@@ -19,8 +19,8 @@ export async function POST(req: Request) {
 
     // Map role to seeded Indian professional personas
     const emailMap: Record<string, string> = {
-      ADMIN: "shivam.admin@interviewx.in",
-      INTERVIEWER: "legendshivam11@gmail.com",
+      ADMIN: "shivamjais.op09@gmail.com",
+      INTERVIEWER: "shivam.interviewer@interviewx.in",
       CANDIDATE: "rohan.mukherjee@gmail.com",
       REVIEWER: "vikram.malhotra@interviewx.in",
     };

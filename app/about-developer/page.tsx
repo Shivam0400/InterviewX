@@ -110,20 +110,20 @@ export default function AboutDeveloperPage() {
                 {/* Direct Contact Info & Email */}
                 <div className="pt-1 flex flex-wrap items-center gap-4 text-xs font-mono">
                   <a
-                    href="mailto:legendshivam11@gmail.com"
+                    href="mailto:shivamjais.op09@gmail.com"
                     className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-card border border-border text-foreground hover:border-brand-500 transition-colors shadow-2xs"
                   >
                     <Mail className="w-3.5 h-3.5 text-brand-400" />
-                    <span>legendshivam11@gmail.com</span>
+                    <span>shivamjais.op09@gmail.com</span>
                   </a>
                   <a
-                    href="https://github.com/shivam-iyk"
+                    href="https://github.com/Shivam0400"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-card border border-border text-foreground hover:border-brand-500 transition-colors shadow-2xs"
                   >
                     <Github className="w-3.5 h-3.5 text-brand-400" />
-                    <span>github.com/shivam-iyk</span>
+                    <span>github.com/Shivam0400</span>
                   </a>
                 </div>
 
@@ -338,11 +338,11 @@ export default function AboutDeveloperPage() {
             </div>
             <div className="flex flex-wrap items-center gap-3">
               <a
-                href="mailto:legendshivam11@gmail.com"
+                href="mailto:shivamjais.op09@gmail.com"
                 className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-brand-600 text-white text-xs font-medium hover:bg-brand-500 transition-colors shadow-sm"
               >
                 <Mail className="w-3.5 h-3.5" />
-                legendshivam11@gmail.com
+                shivamjais.op09@gmail.com
               </a>
               <a
                 href="https://shivam-portfolio-eosin-mu.vercel.app/"

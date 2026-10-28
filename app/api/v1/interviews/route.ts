@@ -51,6 +51,15 @@ export async function GET(req: Request) {
 export async function POST(req: Request) {
   try {
     const session = await getCurrentSession();
+
+    // Enforce RBAC: Candidates cannot create interviews
+    if (session?.role === "CANDIDATE") {
+      return NextResponse.json(
+        { error: "Access Denied: Candidates are not authorized to schedule interviews. Only interviewers and administrators may schedule sessions." },
+        { status: 403 }
+      );
+    }
+
     let interviewerId = session?.userId;
 
     if (!interviewerId) {
