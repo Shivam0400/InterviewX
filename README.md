@@ -65,8 +65,8 @@ Built by **Shivam Sony** (B.Tech in Computer Science & Data Science, Government 
 
 ### 2. Installation
 ```bash
-git clone https://github.com/shivamsony/interviewx.git
-cd interviewx
+git clone https://github.com/Shivam0400/InterviewX.git
+cd InterviewX
 npm install
 ```
 
@@ -90,10 +90,10 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 ## 🧪 Demonstration Personas (1-Click Login)
 
 On the `/sign-in` screen, select any 1-click demo persona:
-- **Interviewer**: Aditya Verma (`aditya.verma@interviewx.in` / `Password123!`)
-- **Candidate**: Rohan Mukherjee (`rohan.mukherjee@gmail.com` / `Password123!`)
-- **Administrator**: Ananya Sharma (`ananya.sharma@interviewx.in` / `Password123!`)
-- **Reviewer**: Vikram Malhotra (`vikram.malhotra@interviewx.in` / `Password123!`)
+- **Administrator**: Shivam Sony (`shivamjais.op09@gmail.com`)
+- **Interviewer**: Shivam Sony (Lead) (`shivam.interviewer@interviewx.in` / `legendshivam11@gmail.com`)
+- **Candidate**: Rohan Mukherjee (`rohan.mukherjee@gmail.com`)
+- **Reviewer**: Vikram Malhotra (`vikram.malhotra@interviewx.in`)
 
 ---
 
@@ -101,7 +101,7 @@ On the `/sign-in` screen, select any 1-click demo persona:
 ```bash
 npm run test
 ```
-Runs 19 automated tests across 4 suites:
+Runs 20 automated tests across 4 suites:
 - Scoring & Output Normalization
 - Role-Based Access Control (RBAC)
 - Execution Sandbox Isolation & Timeouts
@@ -112,6 +112,8 @@ Runs 19 automated tests across 4 suites:
 ## 👨‍💻 About the Developer
 
 **Shivam Sony**  
+- **GitHub**: [https://github.com/Shivam0400](https://github.com/Shivam0400)
+- **Email**: [shivamjais.op09@gmail.com](mailto:shivamjais.op09@gmail.com)
 - **Education**: B.Tech in Computer Science with a specialization in Data Science, Government Engineering College, Jamui.
 - **Experience**: Data Analyst Intern at SteamHouse India Limited (SAP Business One, SQL Server, Stored Procedures, Material Master Data Quality).
 - **Interests**: Python, SQL, Machine Learning, Data Science, AI/ML, Full-Stack Web Development.
