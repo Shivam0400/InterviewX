@@ -4,16 +4,16 @@ import * as React from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import {
-  Terminal,
   LogOut,
-  User,
-  ShieldCheck,
   ChevronDown,
   Sparkles,
-  ExternalLink,
   Laptop,
+  Home,
+  ShieldCheck,
+  UserCheck,
 } from "lucide-react";
 import { ThemeToggle } from "@/components/theme/theme-toggle";
+import { InterviewXBrand } from "@/components/brand/logo";
 
 interface AppHeaderProps {
   user?: {
@@ -31,7 +31,7 @@ export function AppHeader({ user }: AppHeaderProps) {
 
   const currentUser = user || {
     name: "Shivam Sony",
-    email: "shivam.sony@interviewx.in",
+    email: "legendshivam11@gmail.com",
     role: "INTERVIEWER",
   };
 
@@ -69,14 +69,18 @@ export function AppHeader({ user }: AppHeaderProps) {
 
   return (
     <header className="h-14 border-b border-border bg-card/80 backdrop-blur sticky top-0 z-40 px-4 flex items-center justify-between transition-colors">
-      <div className="flex items-center gap-4">
-        <Link href="/dashboard" className="flex items-center gap-2 group">
-          <div className="w-8 h-8 rounded-lg bg-brand-600 flex items-center justify-center text-white shadow-sm shadow-brand-500/20">
-            <Terminal className="w-4 h-4" />
-          </div>
-          <span className="font-bold text-base text-foreground tracking-tight hidden sm:inline">
-            Interview<span className="text-brand-500">X</span>
-          </span>
+      <div className="flex items-center gap-3 sm:gap-4">
+        {/* Brand Logo & Name */}
+        <InterviewXBrand size="sm" showTagline={false} href="/dashboard" />
+
+        {/* Option to Return to Starting Homepage */}
+        <Link
+          href="/"
+          className="flex items-center gap-1.5 px-2.5 py-1 text-xs font-medium text-muted-foreground hover:text-foreground hover:bg-muted rounded-md border border-border/70 transition-colors shadow-2xs"
+          title="Return to Public Starting Homepage"
+        >
+          <Home className="w-3.5 h-3.5 text-brand-400" />
+          <span className="hidden sm:inline">Homepage</span>
         </Link>
 
         {/* Demo Persona Switcher Pill */}
@@ -88,7 +92,9 @@ export function AppHeader({ user }: AppHeaderProps) {
             title="Click to quickly switch demo roles"
           >
             <span className="text-muted-foreground hidden md:inline">Persona:</span>
-            <span className="font-semibold text-brand-400">{currentUser.name}</span>
+            <span className="font-semibold text-brand-400 truncate max-w-[90px] sm:max-w-none">
+              {currentUser.name}
+            </span>
             <span className={`text-[10px] uppercase px-1.5 py-0.2 rounded border ${getRoleBadge(currentUser.role)}`}>
               {currentUser.role}
             </span>
@@ -96,28 +102,28 @@ export function AppHeader({ user }: AppHeaderProps) {
           </button>
 
           {roleSwitchOpen && (
-            <div className="absolute left-0 mt-1.5 w-60 rounded-xl bg-card border border-border shadow-xl p-2 z-50 text-xs space-y-1">
+            <div className="absolute left-0 mt-1.5 w-64 rounded-xl bg-card border border-border shadow-xl p-2 z-50 text-xs space-y-1">
               <div className="px-2 py-1 text-[10px] font-mono text-muted-foreground uppercase">
                 Switch Demo Persona
               </div>
               <button
                 type="button"
                 onClick={() => switchRole("INTERVIEWER")}
-                className="w-full text-left p-2 rounded-lg hover:bg-muted transition-colors flex items-center justify-between"
+                className="w-full text-left p-2 rounded-lg hover:bg-muted transition-colors flex items-center justify-between group"
               >
                 <div>
-                  <div className="font-semibold text-foreground">Shivam Sony</div>
-                  <div className="text-[10px] text-muted-foreground font-mono">shivam.sony@interviewx.in</div>
+                  <div className="font-semibold text-foreground group-hover:text-brand-400">Shivam Sony</div>
+                  <div className="text-[10px] text-muted-foreground font-mono">legendshivam11@gmail.com</div>
                 </div>
                 <span className="text-[10px] px-1.5 py-0.5 rounded bg-brand-500/10 text-brand-400">Interviewer</span>
               </button>
               <button
                 type="button"
                 onClick={() => switchRole("CANDIDATE")}
-                className="w-full text-left p-2 rounded-lg hover:bg-muted transition-colors flex items-center justify-between"
+                className="w-full text-left p-2 rounded-lg hover:bg-muted transition-colors flex items-center justify-between group"
               >
                 <div>
-                  <div className="font-semibold text-foreground">Rohan Mukherjee</div>
+                  <div className="font-semibold text-foreground group-hover:text-brand-400">Rohan Mukherjee</div>
                   <div className="text-[10px] text-muted-foreground font-mono">rohan.mukherjee@gmail.com</div>
                 </div>
                 <span className="text-[10px] px-1.5 py-0.5 rounded bg-emerald-500/10 text-emerald-400">Candidate</span>
@@ -125,10 +131,10 @@ export function AppHeader({ user }: AppHeaderProps) {
               <button
                 type="button"
                 onClick={() => switchRole("ADMIN")}
-                className="w-full text-left p-2 rounded-lg hover:bg-muted transition-colors flex items-center justify-between"
+                className="w-full text-left p-2 rounded-lg hover:bg-muted transition-colors flex items-center justify-between group"
               >
                 <div>
-                  <div className="font-semibold text-foreground">Shivam Sony</div>
+                  <div className="font-semibold text-foreground group-hover:text-brand-400">Shivam Sony</div>
                   <div className="text-[10px] text-muted-foreground font-mono">shivam.admin@interviewx.in</div>
                 </div>
                 <span className="text-[10px] px-1.5 py-0.5 rounded bg-purple-500/10 text-purple-400">Admin</span>
@@ -136,10 +142,10 @@ export function AppHeader({ user }: AppHeaderProps) {
               <button
                 type="button"
                 onClick={() => switchRole("REVIEWER")}
-                className="w-full text-left p-2 rounded-lg hover:bg-muted transition-colors flex items-center justify-between"
+                className="w-full text-left p-2 rounded-lg hover:bg-muted transition-colors flex items-center justify-between group"
               >
                 <div>
-                  <div className="font-semibold text-foreground">Vikram Malhotra</div>
+                  <div className="font-semibold text-foreground group-hover:text-brand-400">Vikram Malhotra</div>
                   <div className="text-[10px] text-muted-foreground font-mono">vikram.malhotra@interviewx.in</div>
                 </div>
                 <span className="text-[10px] px-1.5 py-0.5 rounded bg-cyan-500/10 text-cyan-400">Reviewer</span>
@@ -149,10 +155,10 @@ export function AppHeader({ user }: AppHeaderProps) {
         </div>
       </div>
 
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-2 sm:gap-3">
         <Link
           href="/about-developer"
-          className="hidden lg:flex items-center gap-1 px-2.5 py-1 text-xs text-brand-400 hover:text-brand-300 font-medium"
+          className="hidden lg:flex items-center gap-1.5 px-2.5 py-1 text-xs text-brand-400 hover:text-brand-300 font-medium"
         >
           <Sparkles className="w-3.5 h-3.5" />
           Shivam Sony Profile
@@ -167,7 +173,7 @@ export function AppHeader({ user }: AppHeaderProps) {
             onClick={() => setMenuOpen(!menuOpen)}
             className="flex items-center gap-2 p-1.5 rounded-lg border border-border hover:bg-accent text-foreground text-xs transition-colors"
           >
-            <div className="w-6 h-6 rounded-md bg-brand-600 text-white flex items-center justify-center font-bold text-xs uppercase">
+            <div className="w-6 h-6 rounded-md bg-brand-600 text-white flex items-center justify-center font-bold text-xs uppercase shadow-sm">
               {currentUser.name.charAt(0)}
             </div>
             <span className="font-medium hidden sm:inline">{currentUser.name}</span>
@@ -175,11 +181,19 @@ export function AppHeader({ user }: AppHeaderProps) {
           </button>
 
           {menuOpen && (
-            <div className="absolute right-0 mt-2 w-48 rounded-xl bg-card border border-border shadow-xl p-1.5 z-50 text-xs space-y-1">
+            <div className="absolute right-0 mt-2 w-52 rounded-xl bg-card border border-border shadow-xl p-1.5 z-50 text-xs space-y-1">
               <div className="px-2.5 py-1.5 border-b border-border/80">
                 <div className="font-semibold text-foreground">{currentUser.name}</div>
                 <div className="text-[11px] text-muted-foreground font-mono truncate">{currentUser.email}</div>
               </div>
+              <Link
+                href="/"
+                onClick={() => setMenuOpen(false)}
+                className="flex items-center gap-2 px-2.5 py-1.5 rounded-md hover:bg-muted text-foreground transition-colors"
+              >
+                <Home className="w-3.5 h-3.5 text-brand-400" />
+                Landing Homepage
+              </Link>
               <Link
                 href="/settings"
                 onClick={() => setMenuOpen(false)}
@@ -194,7 +208,7 @@ export function AppHeader({ user }: AppHeaderProps) {
                 className="flex items-center gap-2 px-2.5 py-1.5 rounded-md hover:bg-muted text-brand-400 transition-colors"
               >
                 <Sparkles className="w-3.5 h-3.5" />
-                About Developer
+                About Shivam Sony
               </Link>
               <button
                 type="button"

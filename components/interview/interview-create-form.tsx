@@ -101,7 +101,7 @@ export function InterviewCreateForm({ availableQuestions }: InterviewCreateFormP
 
   // Interviewer config (Defaults to Shivam Sony)
   const [interviewerName, setInterviewerName] = React.useState("Shivam Sony");
-  const [interviewerEmail, setInterviewerEmail] = React.useState("shivam.sony@interviewx.in");
+  const [interviewerEmail, setInterviewerEmail] = React.useState("legendshivam11@gmail.com");
 
   // Candidate & Interview info
   const [title, setTitle] = React.useState("Technical Assessment Screen — Rohan Mukherjee");
@@ -409,7 +409,7 @@ InterviewX Technical Assessments Team`;
               value={interviewerEmail}
               onChange={(e) => setInterviewerEmail(e.target.value)}
               className="w-full px-3 py-2 text-xs rounded-lg border border-border bg-background text-foreground font-mono focus:ring-2 focus:ring-brand-500"
-              placeholder="e.g. shivam.sony@interviewx.in"
+              placeholder="e.g. legendshivam11@gmail.com"
             />
           </div>
         </div>

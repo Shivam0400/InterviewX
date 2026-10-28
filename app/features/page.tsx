@@ -12,6 +12,7 @@ import {
   FileCheck,
   ArrowRight,
   Terminal,
+  Home,
 } from "lucide-react";
 
 export const metadata = {
@@ -106,8 +107,18 @@ export default function FeaturesPage() {
     <div className="min-h-screen flex flex-col bg-background selection:bg-brand-500/20">
       <Navbar />
 
-      <main className="flex-1 py-16 md:py-24">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
+      <main className="flex-1 py-12 md:py-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+          {/* Breadcrumb / Homepage Navigation */}
+          <div className="flex items-center gap-2 text-xs font-mono text-muted-foreground">
+            <Link href="/" className="hover:text-foreground flex items-center gap-1 transition-colors">
+              <Home className="w-3.5 h-3.5 text-brand-400" />
+              <span>Home</span>
+            </Link>
+            <span>/</span>
+            <span className="text-foreground font-semibold">Features & Capabilities</span>
+          </div>
+
           <div className="text-center max-w-3xl mx-auto space-y-4">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-mono bg-brand-500/10 text-brand-400 border border-brand-500/20">
               Platform Capabilities
@@ -161,12 +172,19 @@ export default function FeaturesPage() {
             <p className="text-xs sm:text-sm text-muted-foreground max-w-xl mx-auto">
               Launch an assessment session, write code in the Monaco workspace, execute tests against the sandbox runner, and inspect the AI copilot.
             </p>
-            <div className="pt-2 flex justify-center gap-3">
+            <div className="pt-2 flex justify-center items-center gap-3">
               <Link
                 href="/dashboard"
                 className="px-6 py-2.5 rounded-lg bg-brand-600 hover:bg-brand-500 text-white font-medium text-xs shadow-md transition-colors"
               >
                 Open Live Dashboard
+              </Link>
+              <Link
+                href="/"
+                className="px-5 py-2.5 rounded-lg border border-border bg-card/80 hover:bg-muted text-foreground font-medium text-xs transition-colors flex items-center gap-1.5"
+              >
+                <Home className="w-3.5 h-3.5 text-brand-400" />
+                Return to Homepage
               </Link>
             </div>
           </div>

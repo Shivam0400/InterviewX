@@ -3,12 +3,13 @@
 import * as React from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Terminal, Lock, Mail, ArrowRight, ShieldCheck, UserCheck, AlertCircle } from "lucide-react";
+import { Lock, Mail, ArrowRight, ShieldCheck, UserCheck, AlertCircle, Home } from "lucide-react";
 import { ThemeToggle } from "@/components/theme/theme-toggle";
+import { InterviewXBrand } from "@/components/brand/logo";
 
 export default function SignInPage() {
   const router = useRouter();
-  const [email, setEmail] = React.useState("shivam.sony@interviewx.in");
+  const [email, setEmail] = React.useState("legendshivam11@gmail.com");
   const [password, setPassword] = React.useState("Password123!");
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState<string | null>(null);
@@ -65,17 +66,22 @@ export default function SignInPage() {
 
   return (
     <div className="min-h-screen flex flex-col justify-center py-12 sm:px-6 lg:px-8 bg-background relative selection:bg-brand-500/20">
-      <div className="absolute top-4 right-4">
+      {/* Top Navigation Utilities */}
+      <div className="absolute top-4 right-4 flex items-center gap-2">
+        <Link
+          href="/"
+          className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-border bg-card/80 text-xs font-medium text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
+        >
+          <Home className="w-3.5 h-3.5 text-brand-400" />
+          <span>Homepage</span>
+        </Link>
         <ThemeToggle />
       </div>
 
-      <div className="sm:mx-auto sm:w-full sm:max-w-md text-center space-y-2">
-        <Link href="/" className="inline-flex items-center gap-2 group">
-          <div className="w-10 h-10 rounded-lg bg-brand-600 flex items-center justify-center text-white shadow-md shadow-brand-500/20">
-            <Terminal className="w-5 h-5" />
-          </div>
-          <span className="font-bold text-2xl tracking-tight text-foreground">InterviewX</span>
-        </Link>
+      <div className="sm:mx-auto sm:w-full sm:max-w-md text-center space-y-3">
+        <div className="flex justify-center">
+          <InterviewXBrand size="lg" showTagline={false} href="/" />
+        </div>
         <h2 className="text-xl font-bold tracking-tight text-foreground">Sign in to your assessment portal</h2>
         <p className="text-xs text-muted-foreground">
           Enter credentials or select a 1-click demonstration persona below.
@@ -95,7 +101,7 @@ export default function SignInPage() {
           <div className="space-y-2.5">
             <div className="text-[11px] font-mono text-muted-foreground uppercase tracking-wider flex items-center justify-between">
               <span>Fast 1-Click Demo Personas:</span>
-              <span className="text-brand-400 font-semibold">Ready</span>
+              <span className="text-brand-400 font-semibold">Active</span>
             </div>
             <div className="grid grid-cols-2 gap-2 text-xs">
               <button
@@ -107,7 +113,8 @@ export default function SignInPage() {
                 <span className="font-semibold text-foreground group-hover:text-brand-400 flex items-center justify-between">
                   Interviewer <UserCheck className="w-3.5 h-3.5 text-brand-500" />
                 </span>
-                <span className="text-[10px] text-muted-foreground font-mono">Shivam Sony (Lead Interviewer)</span>
+                <span className="text-[10px] text-muted-foreground font-mono truncate">Shivam Sony (Lead)</span>
+                <span className="text-[9px] text-brand-400/80 font-mono">legendshivam11@gmail.com</span>
               </button>
 
               <button
@@ -119,7 +126,8 @@ export default function SignInPage() {
                 <span className="font-semibold text-foreground group-hover:text-brand-400 flex items-center justify-between">
                   Candidate <UserCheck className="w-3.5 h-3.5 text-emerald-500" />
                 </span>
-                <span className="text-[10px] text-muted-foreground font-mono">Rohan Mukherjee (Candidate)</span>
+                <span className="text-[10px] text-muted-foreground font-mono">Rohan Mukherjee</span>
+                <span className="text-[9px] text-muted-foreground font-mono">rohan.mukherjee@gmail.com</span>
               </button>
 
               <button
@@ -131,7 +139,8 @@ export default function SignInPage() {
                 <span className="font-semibold text-foreground group-hover:text-brand-400 flex items-center justify-between">
                   Admin <ShieldCheck className="w-3.5 h-3.5 text-purple-500" />
                 </span>
-                <span className="text-[10px] text-muted-foreground font-mono">Shivam Sony (Platform Admin)</span>
+                <span className="text-[10px] text-muted-foreground font-mono">Shivam Sony</span>
+                <span className="text-[9px] text-purple-400/80 font-mono">shivam.admin@interviewx.in</span>
               </button>
 
               <button
@@ -143,7 +152,8 @@ export default function SignInPage() {
                 <span className="font-semibold text-foreground group-hover:text-brand-400 flex items-center justify-between">
                   Reviewer <UserCheck className="w-3.5 h-3.5 text-cyan-500" />
                 </span>
-                <span className="text-[10px] text-muted-foreground font-mono">Vikram Malhotra (Reviewer)</span>
+                <span className="text-[10px] text-muted-foreground font-mono">Vikram Malhotra</span>
+                <span className="text-[9px] text-cyan-400/80 font-mono">vikram.malhotra@interviewx.in</span>
               </button>
             </div>
           </div>
@@ -167,7 +177,7 @@ export default function SignInPage() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   className="w-full pl-9 pr-3 py-2 text-xs rounded-lg border border-border bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-brand-500 font-mono"
-                  placeholder="alex.chen@interviewx.dev"
+                  placeholder="legendshivam11@gmail.com"
                 />
               </div>
             </div>
@@ -207,11 +217,18 @@ export default function SignInPage() {
             </button>
           </form>
 
-          <div className="text-center text-xs text-muted-foreground">
-            Don't have an account?{" "}
-            <Link href="/sign-up" className="text-brand-400 font-medium hover:underline">
-              Create an account
-            </Link>
+          <div className="flex flex-col gap-2 text-center text-xs text-muted-foreground">
+            <div>
+              Don't have an account?{" "}
+              <Link href="/sign-up" className="text-brand-400 font-medium hover:underline">
+                Create an account
+              </Link>
+            </div>
+            <div>
+              <Link href="/" className="inline-flex items-center gap-1 text-[11px] text-muted-foreground hover:text-foreground">
+                <Home className="w-3 h-3" /> Back to Homepage
+              </Link>
+            </div>
           </div>
         </div>
       </div>

@@ -25,8 +25,10 @@ import {
   ZoomIn,
   ZoomOut,
   ShieldCheck,
+  Home,
 } from "lucide-react";
 import { ThemeToggle } from "@/components/theme/theme-toggle";
+import { InterviewXLogo } from "@/components/brand/logo";
 
 // Dynamically import Monaco Editor to avoid SSR window issues
 const MonacoEditor = dynamic(() => import("@monaco-editor/react"), {
@@ -251,33 +253,56 @@ export function WorkspaceView({ interview, currentUser }: WorkspaceViewProps) {
     <div className="h-screen w-screen flex flex-col bg-background text-foreground overflow-hidden font-sans select-none">
       {/* Top Application Bar */}
       <header className="h-12 border-b border-border bg-card flex items-center justify-between px-3 shrink-0 gap-3 z-30">
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2.5 sm:gap-3">
+          {/* Logo & Brand in Workspace */}
+          <Link href="/" className="flex items-center gap-2 group mr-1" title="Go to Starting Homepage">
+            <InterviewXLogo size="xs" glow={false} />
+            <span className="font-bold text-xs tracking-tight text-foreground hidden md:inline">
+              Interview<span className="text-brand-400">X</span>
+            </span>
+          </Link>
+
+          <Link
+            href="/"
+            className="flex items-center gap-1 text-[11px] text-muted-foreground hover:text-foreground px-2 py-1 rounded hover:bg-muted border border-border/60 transition-colors"
+            title="Return to Starting Homepage"
+          >
+            <Home className="w-3.5 h-3.5 text-brand-400" />
+            <span className="hidden sm:inline">Homepage</span>
+          </Link>
+
           <Link
             href={`/interviews/${interview.id}`}
-            className="flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground p-1 rounded hover:bg-muted transition-colors"
+            className="flex items-center gap-1 text-[11px] text-muted-foreground hover:text-foreground px-2 py-1 rounded hover:bg-muted transition-colors"
             title="Return to Interview Details"
           >
-            <ChevronLeft className="w-4 h-4" />
-            <span className="hidden sm:inline">Exit Workspace</span>
+            <ChevronLeft className="w-3.5 h-3.5" />
+            <span className="hidden sm:inline">Exit</span>
           </Link>
 
           <div className="h-4 w-[1px] bg-border hidden sm:block"></div>
 
           <div className="flex items-center gap-2">
-            <span className="font-bold text-xs tracking-tight text-foreground truncate max-w-[200px] sm:max-w-md">
+            <span className="font-bold text-xs tracking-tight text-foreground truncate max-w-[150px] sm:max-w-xs md:max-w-sm">
               {interview.title}
             </span>
-            <span className="text-[10px] font-mono px-1.5 py-0.2 rounded bg-brand-500/10 text-brand-400 border border-brand-500/20 hidden md:inline">
-              Live Session
+            <span className="text-[10px] font-mono px-1.5 py-0.2 rounded bg-brand-500/10 text-brand-400 border border-brand-500/20 hidden lg:inline">
+              Deterministic AST Active
             </span>
           </div>
         </div>
 
-        {/* Center: Authoritative Timer */}
-        <div className="flex items-center gap-2 px-3 py-1 rounded-md bg-muted/60 border border-border text-xs font-mono">
-          <Clock className={`w-3.5 h-3.5 ${secondsRemaining < 300 ? "text-red-400 animate-pulse" : "text-brand-400"}`} />
-          <span className={`font-semibold ${secondsRemaining < 300 ? "text-red-400" : "text-foreground"}`}>
-            {formatTimer(secondsRemaining)}
+        {/* Center: Authoritative Timer & Tech Badge */}
+        <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 px-3 py-1 rounded-md bg-muted/60 border border-border text-xs font-mono">
+            <Clock className={`w-3.5 h-3.5 ${secondsRemaining < 300 ? "text-red-400 animate-pulse" : "text-brand-400"}`} />
+            <span className={`font-semibold ${secondsRemaining < 300 ? "text-red-400" : "text-foreground"}`}>
+              {formatTimer(secondsRemaining)}
+            </span>
+          </div>
+          <span className="hidden xl:inline-flex items-center gap-1.5 px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-[10px] font-mono">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+            SECCOMP Cgroup: 128MB
           </span>
         </div>
 

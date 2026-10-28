@@ -3,8 +3,9 @@
 import * as React from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Terminal, Lock, Mail, User, ArrowRight, AlertCircle, CheckCircle2 } from "lucide-react";
+import { Lock, Mail, User, ArrowRight, AlertCircle, CheckCircle2, Home } from "lucide-react";
 import { ThemeToggle } from "@/components/theme/theme-toggle";
+import { InterviewXBrand } from "@/components/brand/logo";
 
 export default function SignUpPage() {
   const router = useRouter();
@@ -43,17 +44,21 @@ export default function SignUpPage() {
 
   return (
     <div className="min-h-screen flex flex-col justify-center py-12 sm:px-6 lg:px-8 bg-background relative selection:bg-brand-500/20">
-      <div className="absolute top-4 right-4">
+      <div className="absolute top-4 right-4 flex items-center gap-2">
+        <Link
+          href="/"
+          className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-border bg-card/80 text-xs font-medium text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
+        >
+          <Home className="w-3.5 h-3.5 text-brand-400" />
+          <span>Homepage</span>
+        </Link>
         <ThemeToggle />
       </div>
 
-      <div className="sm:mx-auto sm:w-full sm:max-w-md text-center space-y-2">
-        <Link href="/" className="inline-flex items-center gap-2 group">
-          <div className="w-10 h-10 rounded-lg bg-brand-600 flex items-center justify-center text-white shadow-md shadow-brand-500/20">
-            <Terminal className="w-5 h-5" />
-          </div>
-          <span className="font-bold text-2xl tracking-tight text-foreground">InterviewX</span>
-        </Link>
+      <div className="sm:mx-auto sm:w-full sm:max-w-md text-center space-y-3">
+        <div className="flex justify-center">
+          <InterviewXBrand size="lg" showTagline={false} href="/" />
+        </div>
         <h2 className="text-xl font-bold tracking-tight text-foreground">Create your account</h2>
         <p className="text-xs text-muted-foreground">
           Join the evidence-based live technical assessment platform.
@@ -164,11 +169,18 @@ export default function SignUpPage() {
             </button>
           </form>
 
-          <div className="text-center text-xs text-muted-foreground">
-            Already have an account?{" "}
-            <Link href="/sign-in" className="text-brand-400 font-medium hover:underline">
-              Sign in
-            </Link>
+          <div className="flex flex-col gap-2 text-center text-xs text-muted-foreground">
+            <div>
+              Already have an account?{" "}
+              <Link href="/sign-in" className="text-brand-400 font-medium hover:underline">
+                Sign in
+              </Link>
+            </div>
+            <div>
+              <Link href="/" className="inline-flex items-center gap-1 text-[11px] text-muted-foreground hover:text-foreground">
+                <Home className="w-3 h-3" /> Back to Homepage
+              </Link>
+            </div>
           </div>
         </div>
       </div>

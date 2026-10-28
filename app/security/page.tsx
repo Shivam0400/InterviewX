@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
-import { Shield, Lock, Terminal, AlertTriangle, CheckCircle2, Cpu, EyeOff, KeyRound } from "lucide-react";
+import { Shield, Lock, Terminal, AlertTriangle, CheckCircle2, Cpu, EyeOff, KeyRound, Home } from "lucide-react";
 
 export const metadata = {
   title: "Security & Sandbox Architecture — InterviewX",
@@ -63,8 +63,18 @@ export default function SecurityPage() {
     <div className="min-h-screen flex flex-col bg-background selection:bg-brand-500/20">
       <Navbar />
 
-      <main className="flex-1 py-16 md:py-24">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
+      <main className="flex-1 py-12 md:py-20">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+          {/* Breadcrumb / Homepage Navigation */}
+          <div className="flex items-center gap-2 text-xs font-mono text-muted-foreground">
+            <Link href="/" className="hover:text-foreground flex items-center gap-1 transition-colors">
+              <Home className="w-3.5 h-3.5 text-brand-400" />
+              <span>Home</span>
+            </Link>
+            <span>/</span>
+            <span className="text-foreground font-semibold">Security Model</span>
+          </div>
+
           <div className="text-center max-w-3xl mx-auto space-y-4">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-mono bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
               <Shield className="w-3.5 h-3.5" />
