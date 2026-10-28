@@ -1,0 +1,274 @@
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id           String      @id @default(cuid())
+  name         String
+  email        String      @unique
+  passwordHash String
+  avatarUrl    String?
+  role         String      @default("INTERVIEWER") // ADMIN, INTERVIEWER, CANDIDATE, REVIEWER
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+
+  interviewsCreated Interview[]        @relation("Interviewer")
+  submissions       Submission[]
+  reportsAuthored   AssessmentReport[] @relation("Reviewer")
+  auditLogs         AuditLog[]
+
+  @@index([email])
+}
+
+model CandidateProfile {
+  id              String   @id @default(cuid())
+  userId          String?  @unique
+  displayName     String
+  email           String   @unique
+  headline        String?
+  experienceYears Int?
+  skillsJson      String?  @default("[]")
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+model Question {
+  id                 String     @id @default(cuid())
+  title              String
+  slug               String     @unique
+  description        String
+  difficulty         String     @default("MEDIUM") // EASY, MEDIUM, HARD
+  topicTags          String     @default("[]") // JSON string: ["Arrays", "Two Pointers"]
+  supportedLanguages String     @default("[\"python\", \"javascript\", \"typescript\", \"cpp\", \"java\"]")
+  timeLimitMs        Int        @default(2000)
+  memoryLimitKb      Int        @default(128000)
+  starterCodes       String     @default("{}") // JSON string of language -> starter code
+  visibility         String     @default("PUBLIC") // PUBLIC, ARCHIVED
+  createdBy          String?
+  version            Int        @default(1)
+  createdAt          DateTime   @default(now())
+  updatedAt          DateTime   @updatedAt
+
+  testCases          TestCase[]
+  interviewQuestions InterviewQuestion[]
+  submissions        Submission[]
+
+  @@index([slug])
+  @@index([difficulty])
+}
+
+model TestCase {
+  id             String    @id @default(cuid())
+  questionId     String
+  question       Question  @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  inputData      String
+  expectedOutput String
+  isHidden       Boolean   @default(false)
+  points         Int       @default(10)
+  sortOrder      Int       @default(0)
+  explanation    String?
+
+  testResults    TestResult[]
+
+  @@index([questionId])
+}
+
+model Interview {
+  id               String            @id @default(cuid())
+  title            String
+  interviewerId    String
+  interviewer      User              @relation("Interviewer", fields: [interviewerId], references: [id])
+  candidateEmail   String
+  candidateName    String
+  inviteToken      String            @unique
+  status           String            @default("SCHEDULED") // DRAFT, SCHEDULED, READY, IN_PROGRESS, SUBMITTED, UNDER_REVIEW, COMPLETED, CANCELLED, EXPIRED
+  interviewType    String            @default("LIVE_CODING") // LIVE_CODING, TIMED_ASSESSMENT, DSA
+  scheduledAt      DateTime?
+  durationMinutes  Int               @default(60)
+  startedAt        DateTime?
+  endedAt          DateTime?
+  notes            String?
+  allowedLanguages String            @default("[\"python\", \"javascript\", \"typescript\", \"cpp\", \"java\"]")
+  scoringRubric    String?           @default("{\"correctness\": 40, \"code_quality\": 25, \"problem_solving\": 20, \"communication\": 15}")
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
+
+  questions        InterviewQuestion[]
+  sessions         InterviewSession[]
+  submissions      Submission[]
+  reports          AssessmentReport[]
+  aiRuns           AiRun[]
+
+  @@index([inviteToken])
+  @@index([interviewerId])
+  @@index([candidateEmail])
+  @@index([status])
+}
+
+model InterviewQuestion {
+  id              String    @id @default(cuid())
+  interviewId     String
+  interview       Interview @relation(fields: [interviewId], references: [id], onDelete: Cascade)
+  questionId      String
+  question        Question  @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  orderIndex      Int       @default(0)
+  pointsAvailable Int       @default(100)
+
+  @@unique([interviewId, questionId])
+  @@index([interviewId])
+}
+
+model InterviewSession {
+  id               String    @id @default(cuid())
+  interviewId      String
+  interview        Interview @relation(fields: [interviewId], references: [id], onDelete: Cascade)
+  participantName  String
+  participantRole  String    @default("CANDIDATE") // CANDIDATE, INTERVIEWER, REVIEWER
+  connectionState  String    @default("ACTIVE") // ACTIVE, IDLE, DISCONNECTED
+  startedAt        DateTime  @default(now())
+  endedAt          DateTime?
+  lastActivityAt   DateTime  @default(now())
+
+  @@index([interviewId])
+}
+
+model Submission {
+  id                 String           @id @default(cuid())
+  interviewId        String
+  interview          Interview        @relation(fields: [interviewId], references: [id], onDelete: Cascade)
+  questionId         String
+  question           Question         @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  candidateId        String?
+  candidate          User?            @relation(fields: [candidateId], references: [id], onDelete: SetNull)
+  language           String
+  sourceCode         String
+  status             String           @default("PENDING") // PENDING, RUNNING, EVALUATED, ERROR
+  deterministicScore Int              @default(0)
+  maxScore           Int              @default(100)
+  executionTimeMs    Float?
+  memoryUsedKb       Float?
+  submittedAt        DateTime         @default(now())
+  createdAt          DateTime         @default(now())
+
+  executionJobs      ExecutionJob[]
+  testResults        TestResult[]
+  assessmentReports  AssessmentReport[]
+  aiRuns             AiRun[]
+
+  @@index([interviewId])
+  @@index([questionId])
+}
+
+model ExecutionJob {
+  id            String      @id @default(cuid())
+  submissionId  String
+  submission    Submission  @relation(fields: [submissionId], references: [id], onDelete: Cascade)
+  provider      String      @default("SAFE_LOCAL") // JUDGE0, SAFE_LOCAL
+  providerJobId String?
+  status        String      @default("COMPLETED") // QUEUED, PROCESSING, COMPLETED, FAILED, TIMED_OUT
+  stdout        String?
+  stderr        String?
+  compileOutput String?
+  exitCode      Int?        @default(0)
+  timeUsed      Float?
+  memoryUsed    Float?
+  createdAt     DateTime    @default(now())
+  completedAt   DateTime?
+
+  @@index([submissionId])
+}
+
+model TestResult {
+  id              String      @id @default(cuid())
+  submissionId    String
+  submission      Submission  @relation(fields: [submissionId], references: [id], onDelete: Cascade)
+  testCaseId      String
+  testCase        TestCase    @relation(fields: [testCaseId], references: [id], onDelete: Cascade)
+  isHidden        Boolean     @default(false)
+  passed          Boolean     @default(false)
+  inputSample     String?     // Sanitized for candidate if hidden
+  expectedSample  String?     // Sanitized for candidate if hidden
+  actualOutput    String?
+  executionTimeMs Float?
+  memoryUsedKb    Float?
+  pointsAwarded   Int         @default(0)
+  statusMessage   String      @default("OK") // OK, WRONG_ANSWER, TIME_LIMIT_EXCEEDED, RUNTIME_ERROR, COMPILE_ERROR
+
+  @@index([submissionId])
+  @@index([testCaseId])
+}
+
+model AssessmentReport {
+  id                 String         @id @default(cuid())
+  interviewId        String
+  interview          Interview      @relation(fields: [interviewId], references: [id], onDelete: Cascade)
+  submissionId       String?
+  submission         Submission?    @relation(fields: [submissionId], references: [id], onDelete: SetNull)
+  rubricVersion      Int            @default(1)
+  deterministicScore Int            @default(0)
+  maxScore           Int            @default(100)
+  percentageScore    Float          @default(0)
+  status             String         @default("DRAFT") // DRAFT, FINALIZED, RELEASED
+  reviewerNotes      String?
+  reviewerId         String?
+  reviewer           User?          @relation("Reviewer", fields: [reviewerId], references: [id], onDelete: SetNull)
+  releasedAt         DateTime?
+  createdAt          DateTime       @default(now())
+  updatedAt          DateTime       @updatedAt
+
+  feedbackItems      FeedbackItem[]
+
+  @@index([interviewId])
+}
+
+model FeedbackItem {
+  id                 String           @id @default(cuid())
+  reportId           String
+  report             AssessmentReport @relation(fields: [reportId], references: [id], onDelete: Cascade)
+  category           String           // STRENGTH, IMPROVEMENT, CODE_QUALITY, COMPLEXITY, EDGE_CASES
+  title              String
+  content            String
+  evidenceReference  String?          // e.g. "Lines 14-22" or "Hidden Test #3"
+  authorType         String           @default("AI_ADVISORY") // AI_ADVISORY, INTERVIEWER, REVIEWER
+  createdAt          DateTime         @default(now())
+
+  @@index([reportId])
+}
+
+model AiRun {
+  id           String      @id @default(cuid())
+  interviewId  String
+  interview    Interview   @relation(fields: [interviewId], references: [id], onDelete: Cascade)
+  submissionId String?
+  submission   Submission? @relation(fields: [submissionId], references: [id], onDelete: SetNull)
+  provider     String      @default("HEURISTIC_LLM") // GEMINI, OPENAI, HEURISTIC_LLM
+  model        String      @default("gemini-1.5-pro")
+  promptType   String      // EXPLANATION, FOLLOWUP_QUESTIONS, CODE_REVIEW, COMPREHENSIVE_REPORT
+  status       String      @default("SUCCESS") // SUCCESS, ERROR, FALLBACK
+  latencyMs    Int         @default(0)
+  outputJson   String      // Structured JSON response
+  createdAt    DateTime    @default(now())
+
+  @@index([interviewId])
+}
+
+model AuditLog {
+  id           String   @id @default(cuid())
+  actorId      String?
+  actorEmail   String?
+  actor        User?    @relation(fields: [actorId], references: [id], onDelete: SetNull)
+  action       String   // INTERVIEW_CREATED, CODE_EXECUTED, REPORT_RELEASED, etc.
+  resourceType String   // INTERVIEW, SUBMISSION, QUESTION, USER
+  resourceId   String?
+  metadata     String?  // JSON string
+  createdAt    DateTime @default(now())
+
+  @@index([action])
+  @@index([resourceType])
+  @@index([actorId])
+}
