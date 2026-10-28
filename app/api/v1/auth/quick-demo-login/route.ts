@@ -17,12 +17,12 @@ export async function POST(req: Request) {
 
     const { role } = parsed.data;
 
-    // Map role to seeded user
+    // Map role to seeded Indian professional personas
     const emailMap: Record<string, string> = {
-      ADMIN: "admin@interviewx.dev",
-      INTERVIEWER: "alex.chen@interviewx.dev",
-      CANDIDATE: "marcus.vance@example.com",
-      REVIEWER: "david.kim@interviewx.dev",
+      ADMIN: "ananya.sharma@interviewx.in",
+      INTERVIEWER: "aditya.verma@interviewx.in",
+      CANDIDATE: "rohan.mukherjee@gmail.com",
+      REVIEWER: "vikram.malhotra@interviewx.in",
     };
 
     const targetEmail = emailMap[role];

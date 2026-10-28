@@ -98,7 +98,7 @@ export function InteractivePreview() {
                 <p className="text-emerald-500">cache.get(1); // returns 1</p>
               </div>
               <div className="pt-2 flex items-center justify-between text-xs text-muted-foreground">
-                <span>Interviewer: Alex Chen</span>
+                <span>Interviewer: Aditya Verma</span>
                 <span className="text-emerald-400 flex items-center gap-1">
                   <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> Connected
                 </span>

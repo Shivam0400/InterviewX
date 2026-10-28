@@ -8,7 +8,7 @@ import { ThemeToggle } from "@/components/theme/theme-toggle";
 
 export default function SignInPage() {
   const router = useRouter();
-  const [email, setEmail] = React.useState("alex.chen@interviewx.dev");
+  const [email, setEmail] = React.useState("aditya.verma@interviewx.in");
   const [password, setPassword] = React.useState("Password123!");
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState<string | null>(null);
@@ -107,7 +107,7 @@ export default function SignInPage() {
                 <span className="font-semibold text-foreground group-hover:text-brand-400 flex items-center justify-between">
                   Interviewer <UserCheck className="w-3.5 h-3.5 text-brand-500" />
                 </span>
-                <span className="text-[10px] text-muted-foreground font-mono">Alex Chen (Staff Eng)</span>
+                <span className="text-[10px] text-muted-foreground font-mono">Aditya Verma (Lead Eng)</span>
               </button>
 
               <button
@@ -119,7 +119,7 @@ export default function SignInPage() {
                 <span className="font-semibold text-foreground group-hover:text-brand-400 flex items-center justify-between">
                   Candidate <UserCheck className="w-3.5 h-3.5 text-emerald-500" />
                 </span>
-                <span className="text-[10px] text-muted-foreground font-mono">Marcus Vance (Candidate)</span>
+                <span className="text-[10px] text-muted-foreground font-mono">Rohan Mukherjee (Candidate)</span>
               </button>
 
               <button
@@ -131,7 +131,7 @@ export default function SignInPage() {
                 <span className="font-semibold text-foreground group-hover:text-brand-400 flex items-center justify-between">
                   Admin <ShieldCheck className="w-3.5 h-3.5 text-purple-500" />
                 </span>
-                <span className="text-[10px] text-muted-foreground font-mono">Sarah Jenkins (Admin)</span>
+                <span className="text-[10px] text-muted-foreground font-mono">Ananya Sharma (Director)</span>
               </button>
 
               <button
@@ -143,7 +143,7 @@ export default function SignInPage() {
                 <span className="font-semibold text-foreground group-hover:text-brand-400 flex items-center justify-between">
                   Reviewer <UserCheck className="w-3.5 h-3.5 text-cyan-500" />
                 </span>
-                <span className="text-[10px] text-muted-foreground font-mono">David Kim (Reviewer)</span>
+                <span className="text-[10px] text-muted-foreground font-mono">Vikram Malhotra (Reviewer)</span>
               </button>
             </div>
           </div>

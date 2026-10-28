@@ -90,10 +90,10 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 ## 🧪 Demonstration Personas (1-Click Login)
 
 On the `/sign-in` screen, select any 1-click demo persona:
-- **Interviewer**: Alex Chen (`alex.chen@interviewx.dev` / `Password123!`)
-- **Candidate**: Marcus Vance (`marcus.vance@example.com` / `Password123!`)
-- **Administrator**: Sarah Jenkins (`admin@interviewx.dev` / `Password123!`)
-- **Reviewer**: David Kim (`david.kim@interviewx.dev` / `Password123!`)
+- **Interviewer**: Aditya Verma (`aditya.verma@interviewx.in` / `Password123!`)
+- **Candidate**: Rohan Mukherjee (`rohan.mukherjee@gmail.com` / `Password123!`)
+- **Administrator**: Ananya Sharma (`ananya.sharma@interviewx.in` / `Password123!`)
+- **Reviewer**: Vikram Malhotra (`vikram.malhotra@interviewx.in` / `Password123!`)
 
 ---
 

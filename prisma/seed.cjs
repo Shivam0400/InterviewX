@@ -4,7 +4,7 @@ const bcrypt = require("bcryptjs");
 const prisma = new PrismaClient();
 
 async function main() {
-  console.log("Seeding InterviewX database with production-grade sample data...");
+  console.log("Seeding InterviewX database with authentic Indian professional personas & benchmark data...");
 
   // Clear existing records to ensure clean state
   await prisma.auditLog.deleteMany({});
@@ -23,41 +23,62 @@ async function main() {
 
   const passwordHash = await bcrypt.hash("Password123!", 10);
 
-  // 1. Seed Users
+  // 1. Seed Users with realistic Indian names and valid corporate/personal emails
   const adminUser = await prisma.user.create({
     data: {
-      name: "Sarah Jenkins",
-      email: "admin@interviewx.dev",
+      name: "Ananya Sharma",
+      email: "ananya.sharma@interviewx.in",
       passwordHash,
       role: "ADMIN",
-      avatarUrl: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&auto=format&fit=crop&q=80",
+      avatarUrl: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150&auto=format&fit=crop&q=80",
     },
   });
 
   const interviewerUser = await prisma.user.create({
     data: {
-      name: "Alex Chen",
-      email: "alex.chen@interviewx.dev",
+      name: "Aditya Verma",
+      email: "aditya.verma@interviewx.in",
       passwordHash,
       role: "INTERVIEWER",
-      avatarUrl: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80",
+      avatarUrl: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=150&auto=format&fit=crop&q=80",
     },
   });
 
   const reviewerUser = await prisma.user.create({
     data: {
-      name: "David Kim",
-      email: "david.kim@interviewx.dev",
+      name: "Vikram Malhotra",
+      email: "vikram.malhotra@interviewx.in",
       passwordHash,
       role: "REVIEWER",
       avatarUrl: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&auto=format&fit=crop&q=80",
     },
   });
 
-  const candidateUser = await prisma.user.create({
+  const candidateUser1 = await prisma.user.create({
     data: {
-      name: "Marcus Vance",
-      email: "marcus.vance@example.com",
+      name: "Rohan Mukherjee",
+      email: "rohan.mukherjee@gmail.com",
+      passwordHash,
+      role: "CANDIDATE",
+      avatarUrl: "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=150&auto=format&fit=crop&q=80",
+    },
+  });
+
+  await prisma.candidateProfile.create({
+    data: {
+      userId: candidateUser1.id,
+      displayName: "Rohan Mukherjee",
+      email: "rohan.mukherjee@gmail.com",
+      headline: "Senior Backend Systems Engineer • 4+ yrs (Bengaluru)",
+      experienceYears: 4,
+      skillsJson: JSON.stringify(["Python", "Go", "Distributed Caches", "PostgreSQL", "Kafka"]),
+    },
+  });
+
+  const candidateUser2 = await prisma.user.create({
+    data: {
+      name: "Sneha Patel",
+      email: "sneha.patel@gmail.com",
       passwordHash,
       role: "CANDIDATE",
       avatarUrl: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80",
@@ -66,18 +87,18 @@ async function main() {
 
   await prisma.candidateProfile.create({
     data: {
-      userId: candidateUser.id,
-      displayName: "Marcus Vance",
-      email: "marcus.vance@example.com",
-      headline: "Senior Distributed Systems Engineer (5+ yrs)",
-      experienceYears: 5,
-      skillsJson: JSON.stringify(["Python", "Distributed Systems", "PostgreSQL", "Go", "Redis"]),
+      userId: candidateUser2.id,
+      displayName: "Sneha Patel",
+      email: "sneha.patel@gmail.com",
+      headline: "Full-Stack Software Engineer • 3 yrs (Pune / Hyderabad)",
+      experienceYears: 3,
+      skillsJson: JSON.stringify(["TypeScript", "React", "Node.js", "SQL", "Redis"]),
     },
   });
 
-  console.log("Users seeded successfully.");
+  console.log("Users and Profiles seeded successfully with realistic Indian personas.");
 
-  // 2. Seed Questions
+  // 2. Seed High-Yield Questions
   const q1 = await prisma.question.create({
     data: {
       title: "LRU Cache Implementation",
@@ -173,7 +194,6 @@ console.log(cache.get(4));
     },
   });
 
-  // Test cases for LRU Cache
   await prisma.testCase.createMany({
     data: [
       {
@@ -239,7 +259,6 @@ You can return the answer in any order, formatted as two space-separated integer
 - Only one valid answer exists.`,
       starterCodes: JSON.stringify({
         python: `def two_sum(nums, target):
-    # TODO: Implement O(N) hash map solution
     seen = {}
     for i, num in enumerate(nums):
         complement = target - num
@@ -343,8 +362,7 @@ Given an array of \`intervals\` where \`intervals[i] = [start_i, end_i]\`, merge
 
 ### Examples
 - Input: \`[[1,3],[2,6],[8,10],[15,18]]\`
-- Output: \`[[1,6],[8,10],[15,18]]\`
-- Explanation: Since intervals \`[1,3]\` and \`[2,6]\` overlap, merge them into \`[1,6]\`.`,
+- Output: \`[[1,6],[8,10],[15,18]]\``,
       starterCodes: JSON.stringify({
         javascript: `function mergeIntervals(intervals) {
   if (!intervals.length) return [];
@@ -394,27 +412,24 @@ console.log(JSON.stringify(mergeIntervals([[1,3],[2,6],[8,10],[15,18]])));
         isHidden: true,
         points: 30,
         sortOrder: 3,
-        explanation: "Unsorted input with nested boundaries",
       },
     ],
   });
 
-  console.log("Questions and Test Cases seeded.");
-
-  // 3. Seed Sample Interviews
+  // 3. Seed Realistic Indian Interviews with Random Access Codes
   const interview1 = await prisma.interview.create({
     data: {
-      title: "Senior Backend Systems Screen — Marcus Vance",
+      title: "Senior Backend Systems Screen — Rohan Mukherjee",
       interviewerId: interviewerUser.id,
-      candidateEmail: "marcus.vance@example.com",
-      candidateName: "Marcus Vance",
-      inviteToken: "ivx-token-mv-2026-demo",
+      candidateEmail: "rohan.mukherjee@gmail.com",
+      candidateName: "Rohan Mukherjee",
+      inviteToken: "IVX-BLR-8492-RM",
       status: "IN_PROGRESS",
       interviewType: "LIVE_CODING",
       scheduledAt: new Date(),
       durationMinutes: 60,
       startedAt: new Date(Date.now() - 15 * 60 * 1000), // 15 mins ago
-      notes: "Candidate has 5+ years of experience with distributed key-value caches and storage engines.",
+      notes: "Candidate has 4+ years of backend experience in Bengaluru focusing on distributed key-value storage and caching.",
       allowedLanguages: JSON.stringify(["python", "javascript", "typescript", "cpp", "java"]),
     },
   });
@@ -429,18 +444,18 @@ console.log(JSON.stringify(mergeIntervals([[1,3],[2,6],[8,10],[15,18]])));
   // Completed Interview with Assessment Report
   const interview2 = await prisma.interview.create({
     data: {
-      title: "Staff Data Structures & System Algorithms — Elena Rostova",
+      title: "Full-Stack Data & Algorithms Interview — Sneha Patel",
       interviewerId: interviewerUser.id,
-      candidateEmail: "elena.rostova@example.com",
-      candidateName: "Elena Rostova",
-      inviteToken: "ivx-token-er-2026-completed",
+      candidateEmail: "sneha.patel@gmail.com",
+      candidateName: "Sneha Patel",
+      inviteToken: "IVX-PUN-3921-SP",
       status: "COMPLETED",
       interviewType: "LIVE_CODING",
       scheduledAt: new Date(Date.now() - 24 * 3600 * 1000),
       durationMinutes: 60,
       startedAt: new Date(Date.now() - 24 * 3600 * 1000),
       endedAt: new Date(Date.now() - 23 * 3600 * 1000),
-      notes: "Demonstrated strong knowledge of hash table complexity and amortized O(1) operations.",
+      notes: "Demonstrated strong grasp of Map data structures and amortized O(1) space-time trade-offs.",
     },
   });
 
@@ -457,7 +472,7 @@ console.log(JSON.stringify(mergeIntervals([[1,3],[2,6],[8,10],[15,18]])));
     data: {
       interviewId: interview2.id,
       questionId: q2.id,
-      candidateId: candidateUser.id,
+      candidateId: candidateUser2.id,
       language: "javascript",
       sourceCode: `function twoSum(nums, target) {
   const map = new Map();
@@ -476,7 +491,7 @@ console.log(twoSum([2, 7, 11, 15], 9));
       status: "EVALUATED",
       deterministicScore: 100,
       maxScore: 100,
-      executionTimeMs: 42.5,
+      executionTimeMs: 38.2,
       memoryUsedKb: 28400,
     },
   });
@@ -509,7 +524,7 @@ console.log(twoSum([2, 7, 11, 15], 9));
       {
         reportId: report1.id,
         category: "CODE_QUALITY",
-        title: "Idiomatic Modern JavaScript",
+        title: "Clean Modern JavaScript Idioms",
         content: "Effective use of ES6 Map object, template literals, and clean variable scoping.",
         evidenceReference: "Lines 1-11",
         authorType: "INTERVIEWER",
@@ -519,10 +534,35 @@ console.log(twoSum([2, 7, 11, 15], 9));
         category: "COMPLEXITY",
         title: "Verified Algorithmic Complexity",
         content: "Time complexity: O(N), Space complexity: O(N) auxiliary storage for hash index.",
-        evidenceReference: "Deterministic benchmark: 42.5ms average latency",
+        evidenceReference: "Deterministic benchmark: 38.2ms latency",
         authorType: "AI_ADVISORY",
       },
     ],
+  });
+
+  // Scheduled upcoming interview for a third candidate
+  const interview3 = await prisma.interview.create({
+    data: {
+      title: "Data Engineering & Analytics Screen — Arjun Kulkarni",
+      interviewerId: interviewerUser.id,
+      candidateEmail: "arjun.kulkarni@gmail.com",
+      candidateName: "Arjun Kulkarni",
+      inviteToken: "IVX-HYD-5103-AK",
+      status: "SCHEDULED",
+      interviewType: "LIVE_CODING",
+      scheduledAt: new Date(Date.now() + 2 * 3600 * 1000), // in 2 hours
+      durationMinutes: 45,
+      notes: "Candidate has strong SQL and Python data pipeline experience.",
+    },
+  });
+
+  await prisma.interviewQuestion.create({
+    data: {
+      interviewId: interview3.id,
+      questionId: q3.id,
+      orderIndex: 0,
+      pointsAvailable: 100,
+    },
   });
 
   // Audit Logs
@@ -547,7 +587,7 @@ console.log(twoSum([2, 7, 11, 15], 9));
     ],
   });
 
-  console.log("Database seeded successfully with all sample data!");
+  console.log("Database successfully seeded with authentic Indian personas and random meeting tokens!");
 }
 
 main()

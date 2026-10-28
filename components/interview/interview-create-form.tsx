@@ -2,7 +2,20 @@
 
 import * as React from "react";
 import { useRouter } from "next/navigation";
-import { CalendarDays, Clock, User, Mail, Code2, Check, ArrowRight, AlertCircle } from "lucide-react";
+import {
+  CalendarDays,
+  Clock,
+  User,
+  Mail,
+  Code2,
+  Check,
+  ArrowRight,
+  AlertCircle,
+  Dices,
+  RefreshCw,
+  Sparkles,
+  Key,
+} from "lucide-react";
 
 interface QuestionItem {
   id: string;
@@ -17,12 +30,73 @@ interface InterviewCreateFormProps {
   availableQuestions: QuestionItem[];
 }
 
+const INDIAN_CANDIDATE_POOL = [
+  {
+    name: "Rohan Mukherjee",
+    email: "rohan.mukherjee@gmail.com",
+    role: "Senior Backend Engineer",
+    notes: "4+ years experience in Bengaluru with distributed storage, Go, and Redis caching.",
+  },
+  {
+    name: "Sneha Patel",
+    email: "sneha.patel@gmail.com",
+    role: "Full-Stack Engineer",
+    notes: "3 years experience with TypeScript, Next.js, and high-throughput PostgreSQL systems.",
+  },
+  {
+    name: "Aarav Mehta",
+    email: "aarav.mehta@gmail.com",
+    role: "Systems & Algorithms Engineer",
+    notes: "Specializes in low-latency concurrent services, Python, and C++ memory management.",
+  },
+  {
+    name: "Diya Sengupta",
+    email: "diya.sengupta@outlook.in",
+    role: "Senior Data & Backend Engineer",
+    notes: "Experience with data pipelines, Kafka events, and database query optimization.",
+  },
+  {
+    name: "Kavya Iyer",
+    email: "kavya.iyer@gmail.com",
+    role: "Backend Infrastructure Lead",
+    notes: "Strong knowledge of distributed caches, microservices architecture, and API design.",
+  },
+  {
+    name: "Arjun Kulkarni",
+    email: "arjun.kulkarni@gmail.com",
+    role: "Platform Engineer",
+    notes: "Experience with Docker, Kubernetes, Python backend services, and cloud telemetry.",
+  },
+  {
+    name: "Nikhil Deshmukh",
+    email: "nikhil.deshmukh@yahoo.co.in",
+    role: "Full-Stack Software Engineer",
+    notes: "Passionate about competitive programming and clean code architecture.",
+  },
+  {
+    name: "Tanvi Joshi",
+    email: "tanvi.joshi@gmail.com",
+    role: "Data Science & Backend Engineer",
+    notes: "Strong background in statistics, data structures, and Python analytical tools.",
+  },
+];
+
+function generateRandomAccessCode(): string {
+  const hubs = ["BLR", "DEL", "HYD", "PUN", "MUM", "GGN"];
+  const hub = hubs[Math.floor(Math.random() * hubs.length)];
+  const num = Math.floor(1000 + Math.random() * 9000);
+  const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ";
+  const suffix = chars[Math.floor(Math.random() * chars.length)] + chars[Math.floor(Math.random() * chars.length)];
+  return `IVX-${hub}-${num}-${suffix}`;
+}
+
 export function InterviewCreateForm({ availableQuestions }: InterviewCreateFormProps) {
   const router = useRouter();
 
-  const [title, setTitle] = React.useState("Senior Backend Engineering Screen");
-  const [candidateName, setCandidateName] = React.useState("");
-  const [candidateEmail, setCandidateEmail] = React.useState("");
+  const [title, setTitle] = React.useState("Senior Engineering Technical Screen");
+  const [candidateName, setCandidateName] = React.useState("Rohan Mukherjee");
+  const [candidateEmail, setCandidateEmail] = React.useState("rohan.mukherjee@gmail.com");
+  const [accessCode, setAccessCode] = React.useState<string>("");
   const [interviewType, setInterviewType] = React.useState("LIVE_CODING");
   const [durationMinutes, setDurationMinutes] = React.useState(60);
   const [selectedQuestions, setSelectedQuestions] = React.useState<string[]>(
@@ -33,9 +107,28 @@ export function InterviewCreateForm({ availableQuestions }: InterviewCreateFormP
     "javascript",
     "typescript",
   ]);
-  const [notes, setNotes] = React.useState("");
+  const [notes, setNotes] = React.useState("Candidate has 4+ years of backend engineering experience.");
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState<string | null>(null);
+
+  // Initialize fresh random code on client mount
+  React.useEffect(() => {
+    setAccessCode(generateRandomAccessCode());
+  }, []);
+
+  const handleRollCode = () => {
+    setAccessCode(generateRandomAccessCode());
+  };
+
+  const handleRandomizeCandidate = () => {
+    const randomCand = INDIAN_CANDIDATE_POOL[Math.floor(Math.random() * INDIAN_CANDIDATE_POOL.length)];
+    const newCode = generateRandomAccessCode();
+    setCandidateName(randomCand.name);
+    setCandidateEmail(randomCand.email);
+    setNotes(randomCand.notes);
+    setTitle(`${randomCand.role} Screen — ${randomCand.name}`);
+    setAccessCode(newCode);
+  };
 
   const toggleQuestion = (id: string) => {
     if (selectedQuestions.includes(id)) {
@@ -84,6 +177,7 @@ export function InterviewCreateForm({ availableQuestions }: InterviewCreateFormP
           questionIds: selectedQuestions,
           allowedLanguages,
           notes,
+          inviteToken: accessCode,
         }),
       });
 
@@ -110,6 +204,28 @@ export function InterviewCreateForm({ availableQuestions }: InterviewCreateFormP
         </div>
       )}
 
+      {/* Quick Generator Pill */}
+      <div className="p-4 rounded-xl bg-gradient-to-r from-brand-950/40 via-indigo-950/30 to-background border border-brand-500/30 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-sm">
+        <div className="space-y-0.5">
+          <div className="flex items-center gap-2 text-brand-400 font-semibold text-xs">
+            <Sparkles className="w-3.5 h-3.5" />
+            <span>Fast Candidate & Access Code Generator</span>
+          </div>
+          <p className="text-[11px] text-muted-foreground">
+            Instantly generates an authentic Indian candidate profile, professional email, and fresh access token.
+          </p>
+        </div>
+
+        <button
+          type="button"
+          onClick={handleRandomizeCandidate}
+          className="flex items-center justify-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-brand-600 hover:bg-brand-500 text-white text-xs font-semibold shadow-sm transition-all shrink-0"
+        >
+          <Dices className="w-4 h-4" />
+          Randomize Candidate & Code
+        </button>
+      </div>
+
       {/* Section 1: General Info */}
       <div className="p-5 rounded-xl bg-card border border-border/80 space-y-4">
         <h2 className="text-sm font-bold text-foreground flex items-center gap-2">
@@ -126,7 +242,7 @@ export function InterviewCreateForm({ availableQuestions }: InterviewCreateFormP
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               className="w-full px-3 py-2 text-xs rounded-lg border border-border bg-background text-foreground focus:ring-2 focus:ring-brand-500 font-medium"
-              placeholder="e.g. Senior Backend Systems Screen"
+              placeholder="e.g. Senior Backend Engineering Screen — Rohan Mukherjee"
             />
           </div>
 
@@ -159,11 +275,11 @@ export function InterviewCreateForm({ availableQuestions }: InterviewCreateFormP
         </div>
       </div>
 
-      {/* Section 2: Candidate Details */}
+      {/* Section 2: Candidate Details & Random Access Code */}
       <div className="p-5 rounded-xl bg-card border border-border/80 space-y-4">
         <h2 className="text-sm font-bold text-foreground flex items-center gap-2">
           <User className="w-4 h-4 text-brand-500" />
-          Candidate Identity & Secure Invitation
+          Candidate Identity & Random Access Code
         </h2>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -175,7 +291,7 @@ export function InterviewCreateForm({ availableQuestions }: InterviewCreateFormP
               value={candidateName}
               onChange={(e) => setCandidateName(e.target.value)}
               className="w-full px-3 py-2 text-xs rounded-lg border border-border bg-background text-foreground focus:ring-2 focus:ring-brand-500"
-              placeholder="e.g. Jordan Miller"
+              placeholder="e.g. Rohan Mukherjee"
             />
           </div>
 
@@ -187,13 +303,44 @@ export function InterviewCreateForm({ availableQuestions }: InterviewCreateFormP
               value={candidateEmail}
               onChange={(e) => setCandidateEmail(e.target.value)}
               className="w-full px-3 py-2 text-xs rounded-lg border border-border bg-background text-foreground focus:ring-2 focus:ring-brand-500 font-mono"
-              placeholder="e.g. jordan.miller@example.com"
+              placeholder="e.g. rohan.mukherjee@gmail.com"
             />
           </div>
+
+          {/* Random Meeting Code Field */}
+          <div className="md:col-span-2">
+            <div className="flex items-center justify-between mb-1">
+              <label className="block text-xs font-medium text-foreground flex items-center gap-1.5">
+                <Key className="w-3.5 h-3.5 text-brand-500" />
+                Session Access Token / Meeting Code
+              </label>
+              <span className="text-[10px] text-emerald-400 font-mono">Randomly Generated</span>
+            </div>
+
+            <div className="flex items-center gap-2">
+              <input
+                type="text"
+                required
+                value={accessCode}
+                onChange={(e) => setAccessCode(e.target.value)}
+                className="w-full px-3 py-2 text-xs rounded-lg border border-border bg-background text-foreground font-mono font-bold tracking-wider"
+                placeholder="IVX-BLR-8492-RM"
+              />
+              <button
+                type="button"
+                onClick={handleRollCode}
+                className="px-3 py-2 rounded-lg border border-border bg-muted/60 hover:bg-muted text-foreground text-xs font-medium flex items-center gap-1.5 shrink-0 transition-colors"
+                title="Generate another random code"
+              >
+                <RefreshCw className="w-3.5 h-3.5 text-brand-400" />
+                New Code
+              </button>
+            </div>
+            <p className="text-[11px] text-muted-foreground mt-1 font-mono">
+              Candidate workspace URL: <code className="text-foreground">/interviews/workspace?token={accessCode || "..."}</code>
+            </p>
+          </div>
         </div>
-        <p className="text-[11px] text-muted-foreground">
-          A high-entropy, cryptographically secure invitation token will be generated upon creation.
-        </p>
       </div>
 
       {/* Section 3: Question Selection */}
@@ -204,7 +351,7 @@ export function InterviewCreateForm({ availableQuestions }: InterviewCreateFormP
             Select Assessment Questions ({selectedQuestions.length} selected)
           </h2>
           <span className="text-[11px] text-muted-foreground font-mono">
-            {availableQuestions.length} questions available
+            {availableQuestions.length} problems available
           </span>
         </div>
 
@@ -290,7 +437,7 @@ export function InterviewCreateForm({ availableQuestions }: InterviewCreateFormP
             value={notes}
             onChange={(e) => setNotes(e.target.value)}
             className="w-full px-3 py-2 text-xs rounded-lg border border-border bg-background text-foreground focus:ring-2 focus:ring-brand-500"
-            placeholder="Candidate has 4 years experience with node and async systems..."
+            placeholder="Candidate notes..."
           />
         </div>
       </div>
@@ -314,7 +461,7 @@ export function InterviewCreateForm({ availableQuestions }: InterviewCreateFormP
             "Creating Assessment..."
           ) : (
             <>
-              Generate Session & Invite Token <ArrowRight className="w-3.5 h-3.5" />
+              Schedule Session with Access Code <ArrowRight className="w-3.5 h-3.5" />
             </>
           )}
         </button>

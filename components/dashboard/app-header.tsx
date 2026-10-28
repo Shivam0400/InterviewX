@@ -30,8 +30,8 @@ export function AppHeader({ user }: AppHeaderProps) {
   const [roleSwitchOpen, setRoleSwitchOpen] = React.useState(false);
 
   const currentUser = user || {
-    name: "Alex Chen",
-    email: "alex.chen@interviewx.dev",
+    name: "Aditya Verma",
+    email: "aditya.verma@interviewx.in",
     role: "INTERVIEWER",
   };
 
@@ -106,8 +106,8 @@ export function AppHeader({ user }: AppHeaderProps) {
                 className="w-full text-left p-2 rounded-lg hover:bg-muted transition-colors flex items-center justify-between"
               >
                 <div>
-                  <div className="font-semibold text-foreground">Alex Chen</div>
-                  <div className="text-[10px] text-muted-foreground font-mono">alex.chen@interviewx.dev</div>
+                  <div className="font-semibold text-foreground">Aditya Verma</div>
+                  <div className="text-[10px] text-muted-foreground font-mono">aditya.verma@interviewx.in</div>
                 </div>
                 <span className="text-[10px] px-1.5 py-0.5 rounded bg-brand-500/10 text-brand-400">Interviewer</span>
               </button>
@@ -117,8 +117,8 @@ export function AppHeader({ user }: AppHeaderProps) {
                 className="w-full text-left p-2 rounded-lg hover:bg-muted transition-colors flex items-center justify-between"
               >
                 <div>
-                  <div className="font-semibold text-foreground">Marcus Vance</div>
-                  <div className="text-[10px] text-muted-foreground font-mono">marcus.vance@example.com</div>
+                  <div className="font-semibold text-foreground">Rohan Mukherjee</div>
+                  <div className="text-[10px] text-muted-foreground font-mono">rohan.mukherjee@gmail.com</div>
                 </div>
                 <span className="text-[10px] px-1.5 py-0.5 rounded bg-emerald-500/10 text-emerald-400">Candidate</span>
               </button>
@@ -128,8 +128,8 @@ export function AppHeader({ user }: AppHeaderProps) {
                 className="w-full text-left p-2 rounded-lg hover:bg-muted transition-colors flex items-center justify-between"
               >
                 <div>
-                  <div className="font-semibold text-foreground">Sarah Jenkins</div>
-                  <div className="text-[10px] text-muted-foreground font-mono">admin@interviewx.dev</div>
+                  <div className="font-semibold text-foreground">Ananya Sharma</div>
+                  <div className="text-[10px] text-muted-foreground font-mono">ananya.sharma@interviewx.in</div>
                 </div>
                 <span className="text-[10px] px-1.5 py-0.5 rounded bg-purple-500/10 text-purple-400">Admin</span>
               </button>
@@ -139,8 +139,8 @@ export function AppHeader({ user }: AppHeaderProps) {
                 className="w-full text-left p-2 rounded-lg hover:bg-muted transition-colors flex items-center justify-between"
               >
                 <div>
-                  <div className="font-semibold text-foreground">David Kim</div>
-                  <div className="text-[10px] text-muted-foreground font-mono">david.kim@interviewx.dev</div>
+                  <div className="font-semibold text-foreground">Vikram Malhotra</div>
+                  <div className="text-[10px] text-muted-foreground font-mono">vikram.malhotra@interviewx.in</div>
                 </div>
                 <span className="text-[10px] px-1.5 py-0.5 rounded bg-cyan-500/10 text-cyan-400">Reviewer</span>
               </button>

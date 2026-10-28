@@ -13,6 +13,7 @@ const CreateInterviewSchema = z.object({
   questionIds: z.array(z.string()).min(1, "Select at least one question"),
   allowedLanguages: z.array(z.string()).default(["python", "javascript", "typescript", "cpp", "java"]),
   notes: z.string().optional(),
+  inviteToken: z.string().optional(),
 });
 
 export async function GET(req: Request) {
@@ -80,9 +81,15 @@ export async function POST(req: Request) {
       questionIds,
       allowedLanguages,
       notes,
+      inviteToken: clientToken,
     } = parsed.data;
 
-    const inviteToken = `ivx-${crypto.randomBytes(12).toString("hex")}`;
+    // Generate random human-friendly high-entropy access code if not provided
+    const cityHubs = ["BLR", "DEL", "HYD", "PUN", "MUM", "GGN"];
+    const randHub = cityHubs[Math.floor(Math.random() * cityHubs.length)];
+    const randNum = Math.floor(1000 + Math.random() * 9000);
+    const randHex = crypto.randomBytes(2).toString("hex").toUpperCase();
+    const inviteToken = clientToken?.trim() || `IVX-${randHub}-${randNum}-${randHex}`;
 
     const interview = await prisma.interview.create({
       data: {

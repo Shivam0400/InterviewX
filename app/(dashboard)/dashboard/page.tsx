@@ -72,7 +72,7 @@ export default async function DashboardPage() {
             Assessment Operations Hub
           </h1>
           <p className="text-xs text-muted-foreground mt-0.5">
-            Welcome back, <strong className="text-foreground">{session?.name || "Alex Chen"}</strong>. Live technical interview sessions and evidence logs.
+            Welcome back, <strong className="text-foreground">{session?.name || "Aditya Verma"}</strong>. Live technical interview sessions and evidence logs.
           </p>
         </div>
 
