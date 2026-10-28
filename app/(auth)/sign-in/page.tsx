@@ -9,8 +9,8 @@ import { InterviewXBrand } from "@/components/brand/logo";
 
 export default function SignInPage() {
   const router = useRouter();
-  const [email, setEmail] = React.useState("shivamjais.op09@gmail.com");
-  const [password, setPassword] = React.useState("admin123");
+  const [email, setEmail] = React.useState("");
+  const [password, setPassword] = React.useState("");
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState<string | null>(null);
 
@@ -141,7 +141,6 @@ export default function SignInPage() {
                 </span>
                 <span className="text-[10px] text-foreground font-mono">Shivam Sony</span>
                 <span className="text-[9px] text-purple-300 font-mono truncate">shivamjais.op09@gmail.com</span>
-                <span className="text-[9px] text-muted-foreground font-mono">Pass: admin123</span>
               </button>
 
               <button

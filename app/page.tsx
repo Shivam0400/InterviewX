@@ -156,17 +156,6 @@ export default function HomePage() {
                 <Terminal className="w-4 h-4 text-brand-400" />
                 Open Live Platform
               </Link>
-              <Link
-                href="/about-developer"
-                className="flex items-center gap-2 px-5 py-3.5 rounded-xl border border-border/80 bg-muted/40 hover:bg-muted text-muted-foreground hover:text-foreground font-medium transition-all text-sm"
-              >
-                <img
-                  src="/images/shivam-soni.png"
-                  alt="Shivam Sony"
-                  className="w-4 h-4 rounded-full object-cover"
-                />
-                About Shivam Sony
-              </Link>
             </div>
 
             {/* Quick Metrics Bar with Unique CS / Systems Terminology */}
