@@ -3,7 +3,7 @@
 import * as React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Home, Shield, Sparkles, User, LogIn, LayoutDashboard, Menu, X, ArrowUpRight } from "lucide-react";
+import { Home, Shield, Sparkles, User, LogIn, LayoutDashboard, Menu, X, ArrowUpRight, Download } from "lucide-react";
 import { ThemeToggle } from "@/components/theme/theme-toggle";
 import { InterviewXBrand } from "@/components/brand/logo";
 
@@ -52,6 +52,18 @@ export function Navbar() {
         {/* Right Action Items */}
         <div className="hidden md:flex items-center gap-3">
           <ThemeToggle />
+
+          <button
+            type="button"
+            onClick={() => {
+              window.dispatchEvent(new CustomEvent("ivx-open-pwa-install"));
+            }}
+            className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-brand-300 hover:text-white bg-brand-950/40 hover:bg-brand-900/60 rounded-lg border border-brand-500/30 transition-all shadow-sm group"
+            title="Download InterviewX app to your device"
+          >
+            <Download className="w-3.5 h-3.5 text-brand-400 group-hover:-translate-y-0.5 transition-transform" />
+            <span>Install App</span>
+          </button>
 
           <Link
             href="/dashboard"
@@ -126,6 +138,17 @@ export function Navbar() {
               <Home className="w-4 h-4 text-brand-400" />
               Return to Homepage
             </Link>
+            <button
+              type="button"
+              onClick={() => {
+                setMobileMenuOpen(false);
+                window.dispatchEvent(new CustomEvent("ivx-open-pwa-install"));
+              }}
+              className="flex items-center justify-center gap-2 px-4 py-2 text-sm font-medium rounded-lg bg-brand-950/40 border border-brand-500/30 text-brand-300"
+            >
+              <Download className="w-4 h-4 text-brand-400" />
+              Download / Install App
+            </button>
             <Link
               href="/dashboard"
               onClick={() => setMobileMenuOpen(false)}

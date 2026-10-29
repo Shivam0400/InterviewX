@@ -1,7 +1,12 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme/theme-provider";
 import { FloatingAiAssistant } from "@/components/ai/floating-ai-assistant";
+import { PwaInstallPrompt } from "@/components/pwa/pwa-install-prompt";
+
+export const viewport: Viewport = {
+  themeColor: "#6366F1",
+};
 
 export const metadata: Metadata = {
   title: "InterviewX — Production-Grade Live Technical Interview Platform",
@@ -15,7 +20,14 @@ export const metadata: Metadata = {
     "AI Code Review",
     "Monaco Editor",
     "Engineering Hiring",
+    "PWA",
   ],
+  manifest: "/manifest.webmanifest",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "black-translucent",
+    title: "InterviewX",
+  },
 };
 
 export default function RootLayout({
@@ -29,6 +41,7 @@ export default function RootLayout({
         <ThemeProvider>
           {children}
           <FloatingAiAssistant />
+          <PwaInstallPrompt />
         </ThemeProvider>
       </body>
     </html>
